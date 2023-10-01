@@ -1,36 +1,49 @@
 # ipv6-address-acquisition
 
-#### Description
-获取主机 IPv6 地址，并通过邮箱发送到指定收件人。
-
-#### Software Architecture
-Software architecture description
-
-#### Installation
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Instructions
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Contribution
-
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
 
 
-#### Gitee Feature
+### Description
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+Obtain the host IPv6 address and send it to the designated recipient through email.
+
+
+
+### Project Architecture
+
+```txt
+ipv6-address-acquisition
+├── config: Parameter configuration package
+│   ├── smtp.py: SMTP server configuration
+│   └── email.py: Email configuration
+├── service
+│   ├── email.py: Email related services
+│   └── ipv6.py: IPv6 related services
+├── view: Main Logic
+│   └── ipv6_to_email.py 
+├── utils: Utils toolkit
+│   ├── logger.py: Log
+│   ├── file.py: General tools related to file operations
+│   ├── path.py: General tools related to path operations
+│   └── other.py: Other tools
+├── data: Data cache location
+├── logs: Project log file
+├── main.py
+└── .env: Configuration information
+```
+
+
+
+### Installation
+
+1、Enter the project directory `cd ipv6 address acquisition`;
+
+2、Installation project dependencies `pip3 install -r requirements.txt`;
+
+3、Copy the required configuration file for the project `cp. env. sample. env`, and configure all configuration information in the `. env` configuration file;
+
+4、Execute project main program `python3 main.py`
+
+
+
+### If this project is of some use to you, thank you for your star
+
