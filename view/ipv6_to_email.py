@@ -1,6 +1,6 @@
 import os
 
-from config import SMTPConfig
+from config import SMTPConfig, EmailConfig
 from service.email import Email
 from service.ipv6 import get_global_ipv6_address
 from utils.file import textfile_create, get_text_last_line
@@ -10,10 +10,11 @@ from utils.path import get_path_dirs_files
 
 logger = Logger().get_logger()
 smtp_config = SMTPConfig()
+email_config = EmailConfig()
 email = Email(host=smtp_config.host, port=int(smtp_config.port), user=smtp_config.user, password=smtp_config.password)
 
 
-def ipv6_to_email(receivers=smtp_config.receivers):
+def ipv6_to_email():
     """获取本主机 IPv6 地址并通过邮件发送到指定收件人"""
 
     # 自定义日志头部
@@ -61,8 +62,8 @@ def ipv6_to_email(receivers=smtp_config.receivers):
     if not flag:
         logger.info(f"{logger_begin}当前系统 IPv6 地址已变化, 正在发送邮件")
         send_flag = email.send(
-            sender=smtp_config.user,
-            receivers=receivers,
+            sender=email_config.sender,
+            receivers=email_config.receivers,
             From=get_hostname(),
             To="none",
             Subject=f"{get_hostname()} IPv6地址",
