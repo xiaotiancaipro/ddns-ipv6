@@ -10,6 +10,7 @@
 
 ### 项目架构
 
+```txt
 ipv6-address-acquisition
 ├── config 配置信息
 │   ├── smtp.py SMTP服务器配置
@@ -28,6 +29,7 @@ ipv6-address-acquisition
 ├── logs 项目日志
 ├── main.py 主程序
 └── .env 参数配置
+```
 
 
 
