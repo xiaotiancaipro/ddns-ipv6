@@ -15,7 +15,14 @@ email = Email(host=smtp_config.host, port=int(smtp_config.port), user=smtp_confi
 
 
 def ipv6_to_email():
-    """获取本主机 IPv6 地址并通过邮件发送到指定收件人"""
+    """
+    获取本主机 IPv6 地址并通过邮件发送到指定收件人
+
+    该函数会检查 data 路径的 IP 地址文件内容,
+    当且仅当该文件的最后一行内容与当前主机的 IPv6 地址不一致时才会发送邮件
+
+    该函数适合主机已经开机后使用定时任务执行
+    """
 
     # 自定义日志头部
     logger_begin = "[view.ipv6_to_email] "
@@ -83,3 +90,18 @@ def ipv6_to_email():
             return None
 
     logger.info(f"{logger_begin}执行结束")
+
+
+def ipv6_to_email_anyway():
+    """
+    获取本主机 IPv6 地址并通过邮件发送到指定收件人
+
+    该函数不会检查 data 路径的 IP 地址文件内容,
+    而是直接获取该主机的 IPv6 地址，并且写入到 data 路径下的 IP 地址文件中，同时发送邮件
+
+    该函数适合主机开机时执行
+    """
+    # 自定义日志头部
+    logger_begin = "[view.ipv6_to_email_anyway] "
+
+    logger.info(f"{logger_begin}执行开始")
