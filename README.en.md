@@ -35,7 +35,7 @@ ipv6-address-acquisition
 
 ### Installation
 
-1、Enter the project directory `cd ipv6 address acquisition`;
+1、CLone this project and enter the project directory `cd /usr/local && git clone https://gitee.com/xiaotiancaipro/ipv6-address-acquisition.git && cd /usr/local/ipv6-address-acquisition`;
 
 2、Installation project dependencies `pip3 install -r requirements.txt`;
 
