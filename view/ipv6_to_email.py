@@ -5,7 +5,7 @@ from service.email import Email
 from service.ipv6 import get_global_ipv6_address
 from utils.file import textfile_create, get_text_last_line
 from utils.logger import Logger
-from utils.other import get_hostname
+from utils.system import get_hostname
 from utils.path import get_path_dirs_files, get_project_abspath
 
 logger = Logger().get_logger()

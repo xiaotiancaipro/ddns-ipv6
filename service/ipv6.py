@@ -2,7 +2,7 @@ import os
 import re
 
 from utils.logger import Logger
-from utils.other import get_platform
+from utils.system import get_platform
 
 logger = Logger().get_logger()
 
