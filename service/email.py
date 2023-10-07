@@ -56,11 +56,4 @@ class Email(object):
         massage_obj["To"] = Header(To, charset="utf-8")
         massage_obj["Subject"] = Header(Subject, charset="utf-8")
 
-        try:
-            self.__SMTP_object.sendmail(from_addr=sender, to_addrs=receivers, msg=massage_obj.as_string())
-        except Exception as e:
-            logger.error(f"{logger_begin}发送邮件失败")
-            logger.error(f"{logger_begin}{e}")
-            return None
-
-        return not None
+        self.__SMTP_object.sendmail(from_addr=sender, to_addrs=receivers, msg=massage_obj.as_string())
