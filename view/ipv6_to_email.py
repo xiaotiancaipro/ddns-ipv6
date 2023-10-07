@@ -11,7 +11,12 @@ from utils.path import get_path_dirs_files
 logger = Logger().get_logger()
 smtp_config = SMTPConfig()
 email_config = EmailConfig()
-email = Email(host=smtp_config.host, port=int(smtp_config.port), user=smtp_config.user, password=smtp_config.password)
+email = Email(
+    host=smtp_config.host(),
+    port=smtp_config.port(),
+    user=smtp_config.user(),
+    password=smtp_config.password()
+)
 
 ipv6_data_path = f"{get_project_abspath()}/data"
 ipv6_data_file = "ipv6.data"
