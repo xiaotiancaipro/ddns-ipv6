@@ -56,13 +56,13 @@ def ipv6_to_email():
             return None
         flag = 1 if ipv6_address == file_ipv6_address else 2  # 对比两个 IPv6 地址是否一致
 
-    # 若主机 IPv6 和 IP 地址文件中两个 IPv6 地址一致则只生成日志(flag == 1)
+    # 若主机 IPv6 和 IP 地址文件中两个 IPv6 地址一致(flag == 1)则只生成日志
     if flag == 1:
         logger.info(f"{logger_begin}当前系统 IPv6 地址无变化")
         logger.info(f"{logger_begin}执行结束")
         return not None
 
-    # 若 IP 地址文件未创建(flag == 0)或者若主机 IPv6 和 IP 地址文件中两个 IPv6 地址不一致则发送邮件(flag == 2)
+    # 若 IP 地址文件未创建(flag == 0)或者若主机 IPv6 和 IP 地址文件中两个 IPv6 地址不一致(flag == 2)则发送邮件
 
     # 将当前 IPv6 地址添加到 IP 地址文件中
     try:
@@ -88,8 +88,8 @@ def ipv6_to_email():
         )
         logger.info(f"{logger_begin}邮件发送成功")
     except Exception as e:
-        logger.info(f"{logger_begin}邮件发送失败")
-        logger.info(f"{logger_begin}{e}")
+        logger.error(f"{logger_begin}邮件发送失败")
+        logger.error(f"{logger_begin}{e}")
         logger.info(f"{logger_begin}执行结束")
         return None
 
@@ -149,7 +149,7 @@ def ipv6_to_email_anyway():
 
     # 发送邮件
     try:
-        logger.info(f"{logger_begin}{'正在发送邮件' if flag == 0 else '当前系统 IPv6 地址已变化, 正在发送邮件'}")
+        logger.info(f"{logger_begin}正在发送邮件")
         email.send(
             sender=email_config.sender,
             receivers=email_config.receivers,
@@ -160,8 +160,8 @@ def ipv6_to_email_anyway():
         )
         logger.info(f"{logger_begin}邮件发送成功")
     except Exception as e:
-        logger.info(f"{logger_begin}邮件发送失败")
-        logger.info(f"{logger_begin}{e}")
+        logger.error(f"{logger_begin}邮件发送失败")
+        logger.error(f"{logger_begin}{e}")
         logger.info(f"{logger_begin}执行结束")
         return None
 
