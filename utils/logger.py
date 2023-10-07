@@ -3,7 +3,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
-from utils.other import get_project_abspath
+from utils.path import get_project_abspath
 
 
 class Logger(object):

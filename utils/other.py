@@ -1,4 +1,3 @@
-import os
 import socket
 import sys
 
@@ -28,9 +27,3 @@ def get_platform():
         raise Exception(f"{logger_begin}获取本机操作系统平台失败")
 
     return platform_dict[sys_platform]
-
-
-def get_project_abspath():
-    """获得当前项目的绝对路径"""
-    current_file_path = os.path.dirname(os.path.abspath(__file__))
-    return "/".join(current_file_path.split("/")[:-1])

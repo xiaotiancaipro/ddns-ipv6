@@ -2,7 +2,7 @@ import os.path
 
 from dotenv import load_dotenv
 
-from utils.other import get_project_abspath
+from utils.path import get_project_abspath
 
 
 class Config(object):
