@@ -15,8 +15,8 @@ class EmailConfig(Config):
             if self.__configuration_dict[key] == "":
                 raise Exception(f"Email 配置参数 {key} 为空")
 
-    def sender(self):
+    def get_sender(self):
         return self.__configuration_dict["sender"]
 
-    def receivers(self):
+    def get_receivers(self):
         return [self.__configuration_dict["receivers"]]
