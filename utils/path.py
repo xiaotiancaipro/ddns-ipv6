@@ -11,10 +11,3 @@ def get_path_dirs_files(path):
 
     for root, dirs, files in os.walk(path):
         return [dirs, files]
-
-
-def path_create(path):
-    """创建目录, 可以创建多层路径"""
-
-    if not os.path.exists(path):
-        os.makedirs(path)
