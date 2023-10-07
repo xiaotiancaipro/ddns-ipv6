@@ -14,7 +14,7 @@ email_config = EmailConfig()
 email = Email(host=smtp_config.host, port=int(smtp_config.port), user=smtp_config.user, password=smtp_config.password)
 
 
-def ipv6_to_email(boot_flag=0):
+def ipv6_to_email(boot_flag=0, set_logger_begin=None):
     """
     获取本主机 IPv6 地址并通过邮件发送到指定收件人
 
@@ -25,7 +25,7 @@ def ipv6_to_email(boot_flag=0):
     """
 
     # 自定义日志头部
-    logger_begin = "[view.ipv6_to_email] "
+    logger_begin = "[view.ipv6_to_email] " if set_logger_begin is None else set_logger_begin
 
     logger.info(f"{logger_begin}执行开始")
 
@@ -43,7 +43,7 @@ def ipv6_to_email(boot_flag=0):
     ipv6_data_file = "ipv6.data"
     ipv6_data = os.path.join(ipv6_data_path, ipv6_data_file)
     flag = 0  # 0 表示 data 路径下没有 IP 地址文件
-    if ipv6_data_file in get_path_dirs_files(path=ipv6_data_path)[1]:
+    if (boot_flag == 0) and (ipv6_data_file in get_path_dirs_files(path=ipv6_data_path)[1]):
         # 获取 IP 地址文件中的 IPv6 地址
         try:
             logger.info(f"{logger_begin}正在获取 IP 地址文件中的 IPv6 地址")
@@ -112,27 +112,4 @@ def ipv6_to_email_anyway():
 
     该函数适合主机开机时执行
     """
-    # 自定义日志头部
-    logger_begin = "[view.ipv6_to_email_anyway] "
-
-    logger.info(f"{logger_begin}执行开始")
-
-    # 获取本主机 IPv6 地址
-    logger.info(f"{logger_begin}正在获取本主机 IPv6 地址")
-    ipv6_address = get_global_ipv6_address()
-    if ipv6_address is None:
-        logger.error(f"{logger_begin}无法获取本主机 IPv6 地址")
-        return None
-    logger.info(f"{logger_begin}已成功获取本主机 IPv6 地址 -> {ipv6_address}")
-
-    # 判断 data 路径下是否有 IP 地址文件, 若没有则进行创建
-    ipv6_data_path, ipv6_data_file = f"{get_project_abspath()}/data", "ipv6.data"
-    if ipv6_data_file not in get_path_dirs_files(path=ipv6_data_path)[1]:
-        try:
-            logger.info(f"{logger_begin}当前 data 路径下无 IP 地址文件, 正在创建中")
-            textfile_create(path=os.path.join(ipv6_data_path, ipv6_data_file), text="ipv6_address")
-            logger.info(f"{logger_begin}IP 地址文件创建成功")
-        except Exception as e:
-            logger.error(f"{logger_begin}IP 地址文件创建失败")
-            logger.error(f"{logger_begin}{e}")
-            return None
+    ipv6_to_email(boot_flag=1, set_logger_begin="[view.ipv6_to_email_anyway] ")
