@@ -17,14 +17,14 @@ class SMTPConfig(Config):
             if self.__configuration_dict[key] == "":
                 raise Exception(f"SMTP 服务器参数 {key} 为空")
 
-    def host(self):
+    def get_host(self):
         return self.__configuration_dict["host"]
 
-    def port(self):
+    def get_port(self):
         return int(self.__configuration_dict["port"])
 
-    def user(self):
+    def get_user(self):
         return self.__configuration_dict["user"]
 
-    def password(self):
+    def get_password(self):
         return self.__configuration_dict["password"]

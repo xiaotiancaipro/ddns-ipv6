@@ -12,10 +12,10 @@ logger = Logger().get_logger()
 smtp_config = SMTPConfig()
 email_config = EmailConfig()
 email = Email(
-    host=smtp_config.host(),
-    port=smtp_config.port(),
-    user=smtp_config.user(),
-    password=smtp_config.password()
+    host=smtp_config.get_host(),
+    port=smtp_config.get_port(),
+    user=smtp_config.get_user(),
+    password=smtp_config.get_password()
 )
 
 ipv6_data_path = f"{get_project_abspath()}/data"
