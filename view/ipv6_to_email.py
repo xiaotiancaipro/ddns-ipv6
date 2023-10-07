@@ -13,6 +13,10 @@ smtp_config = SMTPConfig()
 email_config = EmailConfig()
 email = Email(host=smtp_config.host, port=int(smtp_config.port), user=smtp_config.user, password=smtp_config.password)
 
+ipv6_data_path = f"{get_project_abspath()}/data"
+ipv6_data_file = "ipv6.data"
+ipv6_data = os.path.join(ipv6_data_path, ipv6_data_file)
+
 
 def ipv6_to_email():
     """
@@ -39,9 +43,6 @@ def ipv6_to_email():
     logger.info(f"{logger_begin}已成功获取本主机 IPv6 地址 -> {ipv6_address}")
 
     # 判断 data 路径下是否有 IP 地址文件, 若有则获取该地址文件中的 IPv6 地址, 同时比较两个地址是否一致
-    ipv6_data_path = f"{get_project_abspath()}/data"
-    ipv6_data_file = "ipv6.data"
-    ipv6_data = os.path.join(ipv6_data_path, ipv6_data_file)
     flag = 0  # 0 表示 data 路径下没有 IP 地址文件
     if ipv6_data_file in get_path_dirs_files(path=ipv6_data_path)[1]:
         try:  # 获取 IP 地址文件中的 IPv6 地址
@@ -66,10 +67,7 @@ def ipv6_to_email():
     # 将当前 IPv6 地址添加到 IP 地址文件中
     try:
         logger.info(f"{logger_begin}正在将当前 IPv6 地址添加到 IP 地址文件中")
-        textfile_create(
-            path=os.path.join(ipv6_data_path, ipv6_data_file),
-            text=f"{ipv6_address}" if flag == 0 else f"\n{ipv6_address}"
-        )
+        textfile_create(path=os.path.join(ipv6_data_path, ipv6_data_file), text=f"{ipv6_address}\n")
         logger.info(f"{logger_begin}当前 IPv6 地址添加成功")
     except Exception as e:
         logger.error(f"{logger_begin}当前 IPv6 地址添加失败")
@@ -79,10 +77,7 @@ def ipv6_to_email():
 
     # 发送邮件
     try:
-        logger.info(
-            f"{logger_begin}正在发送邮件" if flag == 0 else
-            f"{logger_begin}当前系统 IPv6 地址已变化, 正在发送邮件"
-        )
+        logger.info(f"{logger_begin}{'正在发送邮件' if flag == 0 else '当前系统 IPv6 地址已变化, 正在发送邮件'}")
         email.send(
             sender=email_config.sender,
             receivers=email_config.receivers,
@@ -127,9 +122,6 @@ def ipv6_to_email_anyway():
     logger.info(f"{logger_begin}已成功获取本主机 IPv6 地址 -> {ipv6_address}")
 
     # 判断 data 路径下是否有 IP 地址文件, 若有则获取该地址文件中的 IPv6 地址, 同时比较两个地址是否一致
-    ipv6_data_path = f"{get_project_abspath()}/data"
-    ipv6_data_file = "ipv6.data"
-    ipv6_data = os.path.join(ipv6_data_path, ipv6_data_file)
     flag = 0  # 0 表示 data 路径下没有 IP 地址文件
     if ipv6_data_file in get_path_dirs_files(path=ipv6_data_path)[1]:
         try:  # 获取 IP 地址文件中的 IPv6 地址
@@ -147,10 +139,7 @@ def ipv6_to_email_anyway():
     if (flag == 0) or (flag == 2):
         try:
             logger.info(f"{logger_begin}正在将当前 IPv6 地址添加到 IP 地址文件中")
-            textfile_create(
-                path=os.path.join(ipv6_data_path, ipv6_data_file),
-                text=f"{ipv6_address}" if flag == 0 else f"\n{ipv6_address}"
-            )
+            textfile_create(path=os.path.join(ipv6_data_path, ipv6_data_file), text=f"{ipv6_address}\n")
             logger.info(f"{logger_begin}当前 IPv6 地址添加成功")
         except Exception as e:
             logger.error(f"{logger_begin}当前 IPv6 地址添加失败")
@@ -160,10 +149,7 @@ def ipv6_to_email_anyway():
 
     # 发送邮件
     try:
-        logger.info(
-            f"{logger_begin}正在发送邮件" if flag == 0 else
-            f"{logger_begin}当前系统 IPv6 地址已变化, 正在发送邮件"
-        )
+        logger.info(f"{logger_begin}{'正在发送邮件' if flag == 0 else '当前系统 IPv6 地址已变化, 正在发送邮件'}")
         email.send(
             sender=email_config.sender,
             receivers=email_config.receivers,
