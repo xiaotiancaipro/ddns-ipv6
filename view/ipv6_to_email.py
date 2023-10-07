@@ -79,8 +79,8 @@ def ipv6_to_email():
     try:
         logger.info(f"{logger_begin}{'正在发送邮件' if flag == 0 else '当前系统 IPv6 地址已变化, 正在发送邮件'}")
         email.send(
-            sender=email_config.sender,
-            receivers=email_config.receivers,
+            sender=email_config.sender(),
+            receivers=email_config.receivers(),
             From=get_hostname(),
             To="none",
             Subject=f"{get_hostname()} IPv6 地址",
@@ -151,8 +151,8 @@ def ipv6_to_email_anyway():
     try:
         logger.info(f"{logger_begin}正在发送邮件")
         email.send(
-            sender=email_config.sender,
-            receivers=email_config.receivers,
+            sender=email_config.sender(),
+            receivers=email_config.receivers(),
             From=get_hostname(),
             To="none",
             Subject=f"{get_hostname()} IPv6 地址",
