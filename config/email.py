@@ -7,17 +7,16 @@ class EmailConfig(Config):
     """配置邮件参数"""
 
     def __init__(self):
-
-        self.__sender = os.getenv("EMAIL_SENDER"),
-        self.__receivers = [os.getenv("EMAIL_RECEIVERS")]
-
-        if not self.__sender:
-            raise Exception("发件人配置信息为空")
-        if not self.__receivers:
-            raise Exception("收件人配置信息为空")
+        self.__configuration_dict = {
+            "sender": os.getenv("EMAIL_SENDER"),
+            "receivers": os.getenv("EMAIL_RECEIVERS")
+        }
+        for key in self.__configuration_dict.keys():
+            if self.__configuration_dict[key] == "":
+                raise Exception(f"Email 配置参数 {key} 为空")
 
     def sender(self):
-        return self.__sender
+        return self.__configuration_dict["sender"]
 
     def receivers(self):
-        return self.__receivers
+        return [self.__configuration_dict["receivers"]]
