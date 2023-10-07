@@ -24,7 +24,7 @@ ipv6-address-acquisition
 │   ├── logger.py: Log
 │   ├── file.py: General tools related to file operations
 │   ├── path.py: General tools related to path operations
-│   └── other.py: Other tools
+│   └── system.py: General tools related to operation system
 ├── data: Data cache location
 ├── logs: Project log file
 ├── main.py
