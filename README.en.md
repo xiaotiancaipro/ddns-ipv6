@@ -55,9 +55,9 @@ It is recommended to use the Ubuntu 22.04 system and install it using the root u
 
 
 
-在以上安装步骤中第 4 步的 1> 中 `rc.local` 文件需要以下步骤来创建实现自定义脚本开机启动:
+The `rc. local` file in step 4 of the above installation steps requires the following steps to create and implement a custom script for startup:
 
-1、首先使用 `vim /etc/systemd/system/rc-local.service` 命令建立 rc-local.service 文件，并添加以下内容:
+1、Use the `vim /etc/systemd/system/rc-local.service` command to create the `rc-local.service` file and add the following content:
 
 ```txt
 [Unit]
@@ -76,15 +76,15 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 ```
 
-2、使用 `vim /etc/rc.local` 命令创建 rc.local 文件，并添加以下内容：
+2、Use the `vim /etc/rc.local` command to create the `rc.local` file and add the following content:
 
 ```bash
 #!/bin/sh -e
-python3 /usr/local/ipv6-address-acquisition/main.py boot # 这里实现主机开机自动运行指定脚本
+python3 /usr/local/ipv6-address-acquisition/main.py boot # Here, the specified script is automatically run when the host starts up
 exit 0
 ```
 
-3、使用 `chmod +x /etc/rc.local` 命令给 rc.local 文件加上可执行权限。
+3、Use the `chmod +x /etc/rc.local` command to add executable permissions to the `rc.local` file.
 
 4、使用 `systemctl enable rc-local` 命令启用服务。
 
