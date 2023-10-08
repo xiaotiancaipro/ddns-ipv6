@@ -86,7 +86,7 @@ exit 0
 
 3、Use the `chmod +x /etc/rc.local` command to add executable permissions to the `rc.local` file.
 
-4、使用 `systemctl enable rc-local` 命令启用服务。
+4、Use the `systemctl enable rc-local` command to enable services.
 
 
 
