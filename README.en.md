@@ -37,27 +37,27 @@ ipv6-address-acquisition
 
 
 
-建议使用 Ubuntu 22.04 系统，同时使用 root 用户进行安装。
+It is recommended to use the Ubuntu 22.04 system and install it using the root user.
 
 
 
 1、CLone this project and enter the project directory `cd /usr/local && git clone https://gitee.com/xiaotiancaipro/ipv6-address-acquisition.git && cd /usr/local/ipv6-address-acquisition`;
 
-2、安装项目依赖 `pip3 install -r requirements.txt`；
+2、Installation project dependencies `pip3 install -r requirements.txt`；
 
-3、复制项目需要的配置文件 `cp .env.sample .env`，并配置 `.env` 配置文件中的所有配置信息；
+3、Copy the required configuration files for the project `cp .env.sample .env`，And configure all configuration information in the `. env` configuration file;
 
-4、执行项目主程序
+4、Execute project main program
 
-​	1>  在主机开机时自动获取 IPv6 地址并通过邮箱发送到指定收件人，在开机脚本 `rc.local` 中添加 `python3 /usr/local/ipv6-address-acquisition/main.py boot`；
+​	1> Automatically obtain the IPv6 address when the host is turned on and send it to the designated recipient through email, Add `python3 /usr/local/ipv6-address-acquisition/main.py boot` in the startup script `rc.local`;
 
-​	2> 在主机开机后每隔 10 分钟自动获取 IPv6 地址，若 IPv6 地址有变化则通过邮箱发送到指定收件人，使用 `crontab -e` 命令添加计划任务 `*/10 * * * * python3 /usr/local/ipv6-address-acquisition/main.py`。
+​	2> After the host is turned on, the IPv6 address is automatically obtained every 10 minutes. If there is a change in the IPv6 address, it is sent to the designated recipient through email, Adding scheduled tasks `*/10 * * * * python3 /usr/local/ipv6-address-acquisition/main.py` using commands `crontab -e`.
 
 
 
-在以上安装步骤中第 4 步的 1> 中 `rc.local` 文件需要以下步骤来创建实现自定义脚本开机启动：
+在以上安装步骤中第 4 步的 1> 中 `rc.local` 文件需要以下步骤来创建实现自定义脚本开机启动:
 
-1、首先使用 `vim /etc/systemd/system/rc-local.service` 命令建立 rc-local.service 文件，并添加以下内容：
+1、首先使用 `vim /etc/systemd/system/rc-local.service` 命令建立 rc-local.service 文件，并添加以下内容:
 
 ```txt
 [Unit]
