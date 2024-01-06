@@ -2,62 +2,62 @@
 
 
 
-### 介绍
+### Description
 
-获取主机 IPv6 地址，并通过邮箱发送到指定收件人。
+Obtain the host IPv6 address and send it to the designated recipient through email.
 
 
 
-### 项目架构
+### Project Architecture
 
 ```txt
 ipv6-address-acquisition
-├── config: 配置信息
-│   ├── smtp.py: SMTP服务器配置
-│   └── email.py: Email邮件配置
-├── service: 服务
-│   ├── email.py: 与邮件相关服务
-│   └── ipv6.py: 与IPv6相关服务
-├── view: 主逻辑
+├── config: Parameter configuration package
+│   ├── smtp.py: SMTP server configuration
+│   └── email.py: Email configuration
+├── service
+│   ├── email.py: Email related services
+│   └── ipv6.py: IPv6 related services
+├── view: Main Logic
 │   └── ipv6_to_email.py 
-├── utils: 工具包
-│   ├── logger.py: 日志
-│   ├── file.py: 与文件操作相关通用工具
-│   ├── path.py: 与路径操作相关通用工具
-│   └── system.py: 与操作系统相关通用工具
-├── data: 数据缓存位置
-├── logs: 项目日志
-├── main.py: 主程序
-└── .env: 参数配置
+├── utils: Utils toolkit
+│   ├── logger.py: Log
+│   ├── file.py: General tools related to file operations
+│   ├── path.py: General tools related to path operations
+│   └── system.py: General tools related to operation system
+├── data: Data cache location
+├── logs: Project log file
+├── main.py
+└── .env: Configuration information
 ```
 
 
 
-### 安装教程
+### Installation
 
 
 
-建议使用 Ubuntu 22.04 系统，同时使用 root 用户进行安装。
+It is recommended to use the Ubuntu 22.04 system and install it using the root user.
 
 
 
-1、克隆项目并进入项目目录 `cd /usr/local && git clone https://gitee.com/xiaotiancaipro/ipv6-address-acquisition.git && cd /usr/local/ipv6-address-acquisition`；
+1、Clone this project and enter the project directory `cd /usr/local && git clone https://gitee.com/xiaotiancaipro/ipv6-address-acquisition.git && cd /usr/local/ipv6-address-acquisition`;
 
-2、安装项目依赖 `pip3 install -r requirements.txt`；
+2、Installation project dependencies `pip3 install -r requirements.txt`；
 
-3、复制项目需要的配置文件 `cp .env.sample .env`，并配置 `.env` 配置文件中的所有配置信息；
+3、Copy the required configuration files for the project `cp .env.sample .env`，And configure all configuration information in the `. env` configuration file;
 
-4、执行项目主程序
+4、Execute project main program
 
-​	1>  在主机开机时自动获取 IPv6 地址并通过邮箱发送到指定收件人，在开机脚本 `rc.local` 中添加 `python3 /usr/local/ipv6-address-acquisition/main.py boot`；
+​	1> Automatically obtain the IPv6 address when the host is turned on and send it to the designated recipient through email, Add `python3 /usr/local/ipv6-address-acquisition/main.py boot` in the startup script `rc.local`;
 
-​	2> 在主机开机后每隔 10 分钟自动获取 IPv6 地址，若 IPv6 地址有变化则通过邮箱发送到指定收件人，使用 `crontab -e` 命令添加计划任务 `*/10 * * * * python3 /usr/local/ipv6-address-acquisition/main.py`。
+​	2> After the host is turned on, the IPv6 address is automatically obtained every 10 minutes. If there is a change in the IPv6 address, it is sent to the designated recipient through email, Adding scheduled tasks `*/10 * * * * python3 /usr/local/ipv6-address-acquisition/main.py` using commands `crontab -e`.
 
 
 
-在以上安装步骤中第 4 步的 1> 中 `rc.local` 文件需要以下步骤来创建实现自定义脚本开机启动：
+The `rc. local` file in step 4 of the above installation steps requires the following steps to create and implement a custom script for startup:
 
-1、首先使用 `vim /etc/systemd/system/rc-local.service` 命令建立 rc-local.service 文件，并添加以下内容：
+1、Use the `vim /etc/systemd/system/rc-local.service` command to create the `rc-local.service` file and add the following content:
 
 ```txt
 [Unit]
@@ -76,19 +76,19 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 ```
 
-2、使用 `vim /etc/rc.local` 命令创建 rc.local 文件，并添加以下内容：
+2、Use the `vim /etc/rc.local` command to create the `rc.local` file and add the following content:
 
 ```bash
 #!/bin/sh -e
-python3 /usr/local/ipv6-address-acquisition/main.py boot # 这里实现主机开机自动运行指定脚本
+python3 /usr/local/ipv6-address-acquisition/main.py boot # Here, the specified script is automatically run when the host starts up
 exit 0
 ```
 
-3、使用 `chmod +x /etc/rc.local` 命令给 rc.local 文件加上可执行权限。
+3、Use the `chmod +x /etc/rc.local` command to add executable permissions to the `rc.local` file.
 
-4、使用 `systemctl enable rc-local` 命令启用服务。
+4、Use the `systemctl enable rc-local` command to enable services.
 
 
 
-### 若本项目对您有些用处，感谢您的 star
+### If this project is of some use to you, thank you for your star
 
