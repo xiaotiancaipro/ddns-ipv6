@@ -1,6 +1,6 @@
 import os
 
-from config import SMTPConfig, EmailConfig
+from api.config import SMTPConfig, EmailConfig
 from service.email import Email
 from service.ipv6 import get_global_ipv6_address
 from utils.file import textfile_create, get_text_last_line

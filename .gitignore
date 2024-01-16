@@ -62,4 +62,4 @@ build/
 ### Other ###
 __pycache__
 ipv6.data
-.env
+api/.env

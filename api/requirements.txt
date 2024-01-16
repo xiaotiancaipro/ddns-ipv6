@@ -1,0 +1,11 @@
+gunicorn==21.2.0
+Flask==2.3.2
+flask-sqlalchemy==3.1.1
+celery==5.3.1
+werkzeug~=3.0.1
+python-dotenv==1.0.0
+requests~=2.31.0
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+concurrent-log-handler~=0.9.25
+psutil~=5.9.7
