@@ -64,3 +64,4 @@ build/
 __pycache__
 ipv6.data
 api/.env
+/api/instance
