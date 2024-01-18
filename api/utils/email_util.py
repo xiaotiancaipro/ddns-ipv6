@@ -2,7 +2,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-from errors.email_service_error import ConnectError, LoginError
+from errors import SMTPServerConnectError, SMTPServerLoginError
 from log import logger
 
 
@@ -17,12 +17,12 @@ class SMTPServer(object):
             client.connect(host=host, port=int(port))
         except Exception as e:
             logger.error(f"Failed to connect to SMTP server, and the exception is {e}")
-            raise ConnectError
+            raise SMTPServerConnectError
         try:
             client.login(user=user, password=password)
         except Exception as e:
             logger.error(f"SMTP server user login failed, and the exception is {e}")
-            raise LoginError
+            raise SMTPServerLoginError
         return client
 
     def send(self, sender: str, receivers: list, From: str, To: str, Subject: str, Massage: str) -> bool:

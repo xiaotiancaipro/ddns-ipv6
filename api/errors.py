@@ -19,3 +19,11 @@ class BaseErrorCondition(Exception):
 
     def __str__(self):
         return self.__message
+
+
+class SMTPServerConnectError(BaseError):
+    message = "SMTPServerConnectError: Failed to connect to SMTP server"
+
+
+class SMTPServerLoginError(BaseError):
+    message = "SMTPServerLoginError: Failed to login"
