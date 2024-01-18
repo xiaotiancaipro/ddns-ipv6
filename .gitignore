@@ -60,8 +60,10 @@ build/
 ### MacOS ###
 .DS_Store
 
+### API ###
+/api/.env
+/api/instance
+/api/data/ipv6.db
+
 ### Other ###
 __pycache__
-ipv6.data
-api/.env
-/api/instance
