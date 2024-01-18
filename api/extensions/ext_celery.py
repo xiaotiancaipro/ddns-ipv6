@@ -3,9 +3,9 @@ from abc import ABC
 from celery import Task, Celery
 from flask import Flask
 
-from api.config import Config
-from api.extensions.ext_celery_beats_dev import dev_beats
-from api.extensions.ext_celery_beats_prod import prod_beats
+from config import Config
+from extensions.ext_celery_beats_dev import dev_beats
+from extensions.ext_celery_beats_prod import prod_beats
 
 
 def init_app(app: Flask):
