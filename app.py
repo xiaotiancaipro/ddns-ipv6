@@ -3,15 +3,21 @@ from flask import request
 from werkzeug.exceptions import Unauthorized
 
 from config import Config
-from extensions import ext_database, ext_celery
+from extensions import ext_database, ext_celery, ext_migrate
+from extensions.ext_database import db
+
+
+class IPv6AddrApp(Flask):
+    pass
 
 
 def create_app() -> Flask:
-    flask_app = Flask(__name__)
-    flask_app.config.from_object(Config)
-    ext_database.init_app(flask_app)
-    ext_celery.init_app(flask_app)
-    return flask_app
+    ipv6_addr_app = IPv6AddrApp(__name__)
+    ipv6_addr_app.config.from_object(Config)
+    ext_migrate.init(ipv6_addr_app, db)
+    ext_database.init_app(ipv6_addr_app)
+    ext_celery.init_app(ipv6_addr_app)
+    return ipv6_addr_app
 
 
 app = create_app()

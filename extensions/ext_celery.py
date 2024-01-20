@@ -21,7 +21,7 @@ def init_app(app: Flask):
     class CeleryBeatsConfig(object):
         @staticmethod
         def get_beats():
-            if Config.APP_ENV.lower() == "prod":
+            if Config.APP_ENV.lower() == "production":
                 return prod_beats
             return dev_beats
 

@@ -61,9 +61,7 @@ build/
 .DS_Store
 
 ### API ###
-/api/.env
-/api/instance
-/api/data/ipv6.db
+.env
 
 ### Docker ###
 /docker/volumes/*
