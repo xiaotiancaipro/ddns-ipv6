@@ -20,16 +20,16 @@ class Network(db.Model):
 class NetworkOperation(object):
 
     @classmethod
-    def insert(cls, ipaddr: str) -> bool:
+    def insert(cls, ipv6_address: str) -> bool:
         new_network = Network(
-            ip_addr=ipaddr,
+            ip_addr=ipv6_address,
             created_at=datetime.datetime.now()
         )
         try:
             db.session.add(new_network)
             db.session.commit()
         except Exception as e:
-            logger.error(f"The ipv6 address {ipaddr} insert into network table failed, and the exception is {e}")
+            logger.error(f"The ipv6 address {ipv6_address} insert into network table failed, and the exception is {e}")
             return False
         return True
 

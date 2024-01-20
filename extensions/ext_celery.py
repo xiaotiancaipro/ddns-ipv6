@@ -9,21 +9,27 @@ from extensions.ext_celery_beats_prod import prod_beats
 
 
 def init_app(app: Flask):
+    """Celery initialization """
+
     class FlaskTask(Task, ABC):
+        """Use flask app"""
+
         def __call__(self, *args: object, **kwargs: object) -> object:
             with app.app_context():
                 return self.run(*args, **kwargs)
 
-    class CeleryConfig:
-        result_expires = 3600
-        timezone = "Asia/Shanghai"
-
     class CeleryBeatsConfig(object):
+        """Celery beats configuration"""
+
         @staticmethod
         def get_beats():
             if Config.APP_ENV.lower() == "production":
                 return prod_beats
             return dev_beats
+
+        @staticmethod
+        def get_task_module():
+            return ["tasks.network_task"]
 
     celery_app = Celery(
         app.name,
@@ -32,11 +38,16 @@ def init_app(app: Flask):
         task_ignore_result=True,
         broker_connection_retry_on_startup=False,
         backend=app.config["CELERY_BACKEND_URL"],
-        config_source=CeleryConfig,
-        include=["tasks.news_tasks"]
+        include=CeleryBeatsConfig.get_task_module()
     )
 
+    config = {
+        "result_expires": 3600,
+        "timezone": 'Asia/Shanghai',
+        "enable_utc": False,
+        "beat_schedule": CeleryBeatsConfig.get_beats()
+    }
+
+    celery_app.conf.update(**config)
     celery_app.set_default()
-    celery_app.conf.enable_utc = False
-    celery_app.conf.beat_schedule = CeleryBeatsConfig.get_beats()
     app.extensions["celery"] = celery_app

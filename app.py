@@ -23,18 +23,5 @@ def create_app() -> Flask:
 app = create_app()
 celery = app.extensions["celery"]
 
-
-@app.before_request
-def check_auth():
-    auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        raise Unauthorized("You Should Pass Authorization")
-    auth_scheme, auth_token = auth_header.split(" ")
-    if auth_scheme.lower() != 'bearer':
-        raise Unauthorized("Invalid Authorization Format")
-    if auth_token != Config.SYSTEM_SECRET_KEY:
-        raise Unauthorized("Invalid Authorization Code")
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=6001)
