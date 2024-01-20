@@ -1,9 +1,7 @@
 from flask import Flask
-from flask import request
-from werkzeug.exceptions import Unauthorized
 
 from config import Config
-from extensions import ext_database, ext_celery, ext_migrate
+from extensions import ext_migrate, ext_database, ext_celery
 from extensions.ext_database import db
 
 

@@ -19,8 +19,8 @@ class EmailService(object):
             receivers=[Config.EMAIL_RECEIVERS],
             From=Config.EMAIL_SENDER,
             To=Config.EMAIL_RECEIVERS,
-            Subject="IPv6 address acquisition",
-            Massage=f"The current IPv6 address is: {ipv6_address}"
+            Subject="IPv6 Address Acquisition",
+            Massage=f"The current IPv6 address of {Config.HOSTNAME} is {ipv6_address}."
         )
         if not flag:
             logger.error(f"Send an email failed, and the IPv6 address now is {ipv6_address}")
