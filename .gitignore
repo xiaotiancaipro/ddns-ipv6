@@ -65,5 +65,8 @@ build/
 /api/instance
 /api/data/ipv6.db
 
+### Docker ###
+/docker/volumes/*
+
 ### Other ###
 __pycache__

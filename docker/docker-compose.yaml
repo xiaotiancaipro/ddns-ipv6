@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  redis:
+    image: redis:6
+    restart: always
+    container_name: ipv6-address-acquisition-redis
+    volumes:
+      - ./volumes/redis/data:/data
+    command: redis-server --requirepass server123456
+    ports:
+      - "7001:6379"
+  db:
+    image: postgres:16
+    restart: always
+    container_name: ipv6-address-acquisition-postgresql
+    environment:
+      POSTGRES_PASSWORD: server123456
+      POSTGRES_DB: server_spider_api
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./volumes/db/data:/var/lib/postgresql/data
+    ports:
+      - "7002:5432"
