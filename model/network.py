@@ -4,7 +4,6 @@ from sqlalchemy import BigInteger, Text, DateTime
 from sqlalchemy import desc
 from sqlalchemy.sql import func
 
-from errors import NetworkTableIsNull
 from extensions.ext_database import db
 from log import logger
 
@@ -37,9 +36,9 @@ class NetworkOperation(object):
     def get_ip_addr_latest(cls) -> str | None:
         try:
             network = db.session.query(Network).order_by(desc(Network.created_at)).first()
-            if not network:
-                raise NetworkTableIsNull
         except Exception as e:
             logger.error(f"Get ipv6 address latest is failed, and the exception is {e}")
+            return None
+        if not network:
             return None
         return network.ip_addr

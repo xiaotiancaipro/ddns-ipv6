@@ -16,7 +16,3 @@ class SMTPServerConnectError(BaseError):
 
 class SMTPServerLoginError(BaseError):
     message = "SMTPServerLoginError: Failed to login"
-
-
-class NetworkTableIsNull(BaseError):
-    message = "NetworkTableIsNull: The network table is null"
