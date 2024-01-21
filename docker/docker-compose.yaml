@@ -15,7 +15,7 @@ services:
     container_name: ipv6-address-acquisition-postgresql
     environment:
       POSTGRES_PASSWORD: server123456
-      POSTGRES_DB: server_spider_api
+      POSTGRES_DB: ipv6_address_acquisition
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./volumes/db/data:/var/lib/postgresql/data
