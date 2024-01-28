@@ -118,5 +118,5 @@ After successful startup.
 
 
 
-## ==**If this project is of some use to you, thank you for your star**==
+**If this project is of some use to you, thank you for your star**
 
