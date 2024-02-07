@@ -22,4 +22,4 @@ app = create_app()
 celery = app.extensions["celery"]
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=6001)
+    app.run(host='0.0.0.0', port=6003)
