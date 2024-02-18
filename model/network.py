@@ -40,5 +40,6 @@ class NetworkOperation(object):
             logger.error(f"Get ipv6 address latest is failed, and the exception is {e}")
             return None
         if not network:
-            return None
+            logger.info("Database is empty")
+            return "DIE"
         return network.ip_addr

@@ -3,27 +3,21 @@ from celery import shared_task
 from log import logger
 from model.network import NetworkOperation
 from services.email_service import EmailService
-from utils.network_util import NetworkUtil
+from services.ip_service import IPService
 
 
 @shared_task
-def get_ipv6():
-    """Get IPv6 address task"""
+def update_ipv6():
+    """Update IPv6 address task"""
 
-    # Get ipv6 address now
-    ipv6_address = NetworkUtil.get_ipv6_address_public_one()
+    # Get current and database addresses
+    ipv6_address, ipv6_address_db = IPService.get_ipv6_public(), IPService.get_ipv6_db()
     if ipv6_address is None:
-        logger.warning("The public ipv6 address was not obtained")
+        EmailService.send_ipv6_not_obtained()
         return
-    logger.info(f"Successfully obtained the public ipv6 address, and the address is {ipv6_address}")
-
-    # Get ipv6 address from database
-    ipv6_address_db = NetworkOperation.get_ip_addr_latest()
-    if ipv6_address_db is None:  # Insert into database and send an email first when the database is null
-        NetworkOperation.insert(ipv6_address=ipv6_address)
-        EmailService.send(ipv6_address=ipv6_address)
+    if ipv6_address_db is None:
+        EmailService.send_ipv6_db_not_obtained()
         return
-    logger.info(f"Successfully obtained the ipv6 address in database, and the address is {ipv6_address_db}")
 
     # Do not send email when address has not changed
     if ipv6_address == ipv6_address_db:
@@ -32,6 +26,29 @@ def get_ipv6():
 
     # If ipv6 address has changed, so insert it into the database and send an email
     NetworkOperation.insert(ipv6_address=ipv6_address)
-    EmailService.send(ipv6_address=ipv6_address)
+    EmailService.send_ipv6(ipv6_address=ipv6_address)
+
+    return
+
+
+@shared_task
+def schedule_ipv6():
+    """Get regularly IPv6 address task"""
+
+    # Get current and database addresses
+    ipv6_address, ipv6_address_db = IPService.get_ipv6_public(), IPService.get_ipv6_db()
+    if ipv6_address is None:
+        EmailService.send_ipv6_not_obtained()
+        return
+    if ipv6_address_db is None:
+        EmailService.send_ipv6_db_not_obtained()
+        return
+
+    # Insert into database when the ipv6 address has changed
+    if ipv6_address != ipv6_address_db:
+        NetworkOperation.insert(ipv6_address=ipv6_address)
+
+    # Send an email
+    EmailService.send_ipv6(ipv6_address=ipv6_address)
 
     return
