@@ -53,6 +53,10 @@ class Config(object):
     # Domain Name
     DOMAIN_NAME = get_env("DOMAIN_NAME")
 
+    # DDNS
+    RR = get_env("RR")
+    TTL = int(get_env("TTL"))
+
     # Aliyun
     ALIYUN_ACCESSKEY_ID = get_env("ALIYUN_ACCESSKEY_ID")
     ALIYUN_ACCESSKEY_SECRET = get_env("ALIYUN_ACCESSKEY_SECRET")

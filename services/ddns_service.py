@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from alibabacloud_alidns20150109 import models as alidns_20150109_models
 from alibabacloud_alidns20150109.client import Client as Alidns20150109Client
 from alibabacloud_tea_openapi import models as open_api_models
@@ -5,7 +7,6 @@ from alibabacloud_tea_util import models as util_models
 
 from config import Config
 from log import logger
-from abc import ABC, abstractmethod
 
 
 class DDNS(ABC):
@@ -58,15 +59,10 @@ class DDNS(ABC):
 class AliyunDDNS(DDNS):
 
     def __init__(self):
-        self.__client = None
-        self.__init_client()
-
-    def __init_client(self) -> None:
-        aliyun_config = open_api_models.Config(
+        self.__client = Alidns20150109Client(open_api_models.Config(
             access_key_id=Config.ALIYUN_ACCESSKEY_ID,
             access_key_secret=Config.ALIYUN_ACCESSKEY_SECRET
-        )
-        self.__client = Alidns20150109Client(aliyun_config)
+        ))
 
     def describe_records(self) -> list | None:
         describe_domain_records_request = alidns_20150109_models.DescribeDomainRecordsRequest(
@@ -110,6 +106,7 @@ class AliyunDDNS(DDNS):
             return False
         response_dict = response.to_map()
         if response_dict["statusCode"] != 200:
+            logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
         return True
 
@@ -129,5 +126,6 @@ class AliyunDDNS(DDNS):
             return False
         response_dict = response.to_map()
         if response_dict["statusCode"] != 200:
+            logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
         return True

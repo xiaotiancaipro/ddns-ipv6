@@ -1,7 +1,9 @@
 from celery import shared_task
 
+from config import Config
 from log import logger
 from model.network import NetworkOperation
+from services.ddns_service import AliyunDDNS
 from services.email_service import EmailService
 from services.ip_service import IPService
 
@@ -20,9 +22,17 @@ def update_ipv6():
         logger.info(f"The ipv6 address is not changed")
         return
 
-    # If ipv6 address has changed, so insert it into the database and send an email
+    # If ipv6 address has changed, so insert it into the database, send an email and auto-ddns
     NetworkOperation.insert(ipv6_address=ipv6_address)
     EmailService.send_ipv6(ipv6_address=ipv6_address)
+    if Config.DOMAIN_NAME and Config.RR and Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET:
+        aliyun_ddns = AliyunDDNS()
+        aliyun_ddns.upgrade_records(
+            rr=Config.RR,
+            value=ipv6_address,
+            type="AAAA",
+            ttl=Config.TTL if Config.TTL else 600
+        )
 
     return
 
