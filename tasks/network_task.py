@@ -12,11 +12,7 @@ def update_ipv6():
 
     # Get current and database addresses
     ipv6_address, ipv6_address_db = IPService.get_ipv6_public(), IPService.get_ipv6_db()
-    if ipv6_address is None:
-        EmailService.send_ipv6_not_obtained()
-        return
-    if ipv6_address_db is None:
-        EmailService.send_ipv6_db_not_obtained()
+    if not (ipv6_address and ipv6_address_db):
         return
 
     # Do not send email when address has not changed
