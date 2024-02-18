@@ -60,6 +60,8 @@ conda activate ipv6-address-acquisition
    ```bash
    APP_ENV=PRODUCTION
    
+   SYSTEM_SECRET_KEY=
+   
    # Redis
    REDIS_PASSWORD=server123456
    REDIS_HOST=localhost

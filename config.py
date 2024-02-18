@@ -14,6 +14,8 @@ class Config(object):
 
     APP_ENV = get_env("APP_ENV")
 
+    SYSTEM_SECRET_KEY = get_env("SYSTEM_SECRET_KEY")
+
     # Redis
     REDIS_PASSWORD = get_env("REDIS_PASSWORD")
     REDIS_HOST = get_env("REDIS_HOST")
