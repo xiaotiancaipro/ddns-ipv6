@@ -21,7 +21,7 @@ class NetworkUtil(object):
         """Get all public ipv6 addresses"""
         ipv6_address_list = cls.get_ipv6_address_list()
         if len(ipv6_address_list) <= 0:
-            logger.info("IPv6 list is none")
+            logger.warning("IPv6 list is none")
             return None
         ipv6_addresses_public_list = [
             addr
@@ -29,7 +29,7 @@ class NetworkUtil(object):
             if all(key not in addr[:4] for key in ["fe80", "::1"])
         ]
         if len(ipv6_addresses_public_list) <= 0:
-            logger.info("No public IP exists")
+            logger.warning("No public IP exists")
             return None
         return ipv6_addresses_public_list
 

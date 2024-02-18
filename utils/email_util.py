@@ -36,5 +36,4 @@ class SMTPServer(object):
         except Exception as e:
             logger.error(f"Failed to send, and the exception is {e}")
             return False
-        logger.info("Send successfully")
         return True
