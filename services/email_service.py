@@ -23,7 +23,7 @@ class EmailService(object):
             From=Config.EMAIL_SENDER,
             To=Config.EMAIL_RECEIVERS,
             Subject="IPv6 Address Acquisition",
-            Massage=f"The current IPv6 address of {Config.HOSTNAME} is {ipv6_address}."
+            Message=f"The current IPv6 address of {Config.HOSTNAME} is {ipv6_address}."
         )
         if not flag:
             logger.error(f"Send an email failed, and the IPv6 address now is {ipv6_address}")
@@ -39,7 +39,7 @@ class EmailService(object):
             From=Config.EMAIL_SENDER,
             To=Config.EMAIL_RECEIVERS,
             Subject="The current IPv6 address was not obtained",
-            Massage=f"The current IPv6 address of {Config.HOSTNAME} was not obtained"
+            Message=f"The current IPv6 address of {Config.HOSTNAME} was not obtained"
         )
         if not flag:
             logger.error(f"Send an email failed")
@@ -55,7 +55,7 @@ class EmailService(object):
             From=Config.EMAIL_SENDER,
             To=Config.EMAIL_RECEIVERS,
             Subject="The IPv6 address from database was not obtained",
-            Massage=f"The IPv6 address of {Config.HOSTNAME} from database was not obtained"
+            Message=f"The IPv6 address of {Config.HOSTNAME} from database was not obtained"
         )
         if not flag:
             logger.error(f"Send an email failed")

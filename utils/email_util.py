@@ -25,14 +25,14 @@ class SMTPServer(object):
             raise SMTPServerLoginError
         return client
 
-    def send(self, sender: str, receivers: list, From: str, To: str, Subject: str, Massage: str) -> bool:
+    def send(self, sender: str, receivers: list, From: str, To: str, Subject: str, Message: str) -> bool:
         """Send an email"""
-        massage_obj = MIMEText(Massage, _subtype="plain", _charset="utf-8")
-        massage_obj["From"] = Header(From, charset="utf-8")
-        massage_obj["To"] = Header(To, charset="utf-8")
-        massage_obj["Subject"] = Header(Subject, charset="utf-8")
+        message_obj = MIMEText(Message, _subtype="plain", _charset="utf-8")
+        message_obj["From"] = Header(From, charset="utf-8")
+        message_obj["To"] = Header(To, charset="utf-8")
+        message_obj["Subject"] = Header(Subject, charset="utf-8")
         try:
-            self.__SMTP_object.sendmail(from_addr=sender, to_addrs=receivers, msg=massage_obj.as_string())
+            self.__SMTP_object.sendmail(from_addr=sender, to_addrs=receivers, msg=message_obj.as_string())
         except Exception as e:
             logger.error(f"Failed to send, and the exception is {e}")
             return False
