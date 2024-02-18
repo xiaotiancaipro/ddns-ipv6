@@ -86,6 +86,17 @@ conda activate ipv6-address-acquisition
    
    # Email recipient
    EMAIL_RECEIVERS=
+   
+   # Domain Name
+   DOMAIN_NAME=
+
+   # DDNS
+   RR=
+   TTL=600
+
+   # Aliyun
+   ALIYUN_ACCESSKEY_ID=
+   ALIYUN_ACCESSKEY_SECRET=
    ```
 
 2. Install the required dependencies:
