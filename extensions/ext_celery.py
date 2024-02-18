@@ -29,7 +29,7 @@ def init_app(app: Flask):
 
         @staticmethod
         def get_task_module():
-            return ["tasks.network_task"]
+            return ["tasks.ip_task"]
 
     celery_app = Celery(
         app.name,
