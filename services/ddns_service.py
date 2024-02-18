@@ -108,6 +108,7 @@ class AliyunDDNS(DDNS):
         if response_dict["statusCode"] != 200:
             logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
+        logger.info("Domain name resolution added successfully")
         return True
 
     def update_records(self, record_id: str, rr: str, value: str, type: str, ttl: int) -> bool:
@@ -128,4 +129,5 @@ class AliyunDDNS(DDNS):
         if response_dict["statusCode"] != 200:
             logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
+        logger.info("Domain name resolution updated successfully")
         return True
