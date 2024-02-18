@@ -1,5 +1,6 @@
 gunicorn==21.2.0
 Flask==2.3.2
+Flask-RESTful==0.3.10
 flask-migrate~=4.0.4
 flask-sqlalchemy==3.1.1
 celery==5.3.1
@@ -11,3 +12,4 @@ sqlalchemy==2.0.23
 psycopg2-binary==2.9.9
 concurrent-log-handler~=0.9.25
 psutil~=5.9.7
+alibabacloud_alidns20150109==3.0.13

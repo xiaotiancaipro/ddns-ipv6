@@ -1,6 +1,7 @@
 from flask import Flask
 
 from config import Config
+from contorllers.ddns import ddns_pb
 from extensions import ext_migrate, ext_database, ext_celery
 from extensions.ext_database import db
 
@@ -15,6 +16,7 @@ def create_app() -> Flask:
     ext_migrate.init(ipv6_addr_app, db)
     ext_database.init_app(ipv6_addr_app)
     ext_celery.init_app(ipv6_addr_app)
+    ipv6_addr_app.register_blueprint(ddns_pb, url_prefix="/v1/ddns")
     return ipv6_addr_app
 
 

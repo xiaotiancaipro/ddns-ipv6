@@ -49,3 +49,10 @@ class Config(object):
     SMTP_PASSWORD = get_env("SMTP_PASSWORD")
     EMAIL_SENDER = get_env("EMAIL_SENDER")
     EMAIL_RECEIVERS = get_env("EMAIL_RECEIVERS")
+
+    # Domain Name
+    DOMAIN_NAME = get_env("DOMAIN_NAME")
+
+    # Aliyun
+    ALIYUN_ACCESSKEY_ID = get_env("ALIYUN_ACCESSKEY_ID")
+    ALIYUN_ACCESSKEY_SECRET = get_env("ALIYUN_ACCESSKEY_SECRET")
