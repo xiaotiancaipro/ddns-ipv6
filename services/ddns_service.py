@@ -43,8 +43,8 @@ class DDNS(ABC):
             return False
         if len(records_list) <= 0:
             return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
-        records_list = [record["RR"] for record in records_list if record["RecordId"] and record["RR"]]
-        if rr not in records_list:
+        records_rr_list = [record["RR"] for record in records_list if record["RecordId"] and record["RR"]]
+        if rr not in records_rr_list:
             return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
         upgrade_id = None
         for record in records_list:
