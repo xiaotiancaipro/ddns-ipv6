@@ -42,12 +42,3 @@ class IPAddr(db.Model):
             logger.error(f"Get ipv6 address latest is failed, and the exception is {e}")
             return None
         return ip_addr.addr if ip_addr else "DIE"  # "DIE" -> Database is empty
-
-    @classmethod
-    def get_by_addr(cls, ipv6_address: str) -> db.Model | None:
-        try:
-            ip_addr = db.session.query(cls).filter(cls.addr == ipv6_address).order_by(desc(cls.created_at)).first()
-        except SQLAlchemyError as e:
-            logger.error(f"Get failed, and the exception is {e}")
-            return None
-        return ip_addr

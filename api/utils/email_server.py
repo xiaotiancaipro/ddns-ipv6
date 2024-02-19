@@ -1,9 +1,11 @@
+import json
 import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
 from errors import SMTPServerConnectError, SMTPServerLoginError
 from log import logger
+from model.record import RecordEmail
 
 
 class SMTPServer(object):
@@ -32,4 +34,12 @@ class SMTPServer(object):
         except Exception as e:
             logger.error(f"Failed to send, and the exception is {e}")
             return False
+        RecordEmail.insert(
+            sender=sender,
+            receiver=json.dumps(receivers, ensure_ascii=False),
+            from_=From,
+            to_=To,
+            subject=Subject,
+            message=Message
+        )
         return True
