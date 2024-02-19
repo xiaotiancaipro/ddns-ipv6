@@ -6,18 +6,17 @@ from utils.email_util import SMTPServer
 class EmailService(object):
     """Email service"""
 
-    smtp_server = SMTPServer(
-        host=Config.SMTP_HOST,
-        port=Config.SMTP_PORT,
-        user=Config.SMTP_USER,
-        password=Config.SMTP_PASSWORD
-    )
+    def __init__(self):
+        self.__client = SMTPServer(
+            host=Config.SMTP_HOST,
+            port=Config.SMTP_PORT,
+            user=Config.SMTP_USER,
+            password=Config.SMTP_PASSWORD
+        )
 
-    @classmethod
-    def send_ipv6(cls, ipv6_address: str) -> bool:
+    def send_ipv6(self, ipv6_address: str) -> bool:
         """Send an email when the database is null"""
-
-        flag = cls.smtp_server.send(
+        flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
             receivers=[Config.EMAIL_RECEIVERS],
             From=Config.EMAIL_SENDER,
@@ -31,9 +30,8 @@ class EmailService(object):
         logger.info("Send an email successfully")
         return True
 
-    @classmethod
-    def send_ipv6_not_obtained(cls) -> bool:
-        flag = cls.smtp_server.send(
+    def send_ipv6_not_obtained(self) -> bool:
+        flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
             receivers=[Config.EMAIL_RECEIVERS],
             From=Config.EMAIL_SENDER,
@@ -47,9 +45,8 @@ class EmailService(object):
         logger.info("Send an email successfully")
         return True
 
-    @classmethod
-    def send_ipv6_db_not_obtained(cls) -> bool:
-        flag = cls.smtp_server.send(
+    def send_ipv6_db_not_obtained(self) -> bool:
+        flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
             receivers=[Config.EMAIL_RECEIVERS],
             From=Config.EMAIL_SENDER,

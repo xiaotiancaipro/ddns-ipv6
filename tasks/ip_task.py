@@ -23,7 +23,7 @@ def update_ipv6():
         return
 
     # If ipv6 address has changed, so insert it into the database, send an email and auto-ddns
-    flag = EmailService.send_ipv6(ipv6_address=ipv6_address)
+    flag = EmailService().send_ipv6(ipv6_address=ipv6_address)
     if not flag:
         return
     if Config.DOMAIN_NAME and Config.RR and Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET:
@@ -45,7 +45,7 @@ def schedule_ipv6():
     """Get regularly IPv6 address task"""
     ipv6_address = IPService.get_ipv6_public()  # Get current
     if ipv6_address is None:
-        EmailService.send_ipv6_not_obtained()
+        EmailService().send_ipv6_not_obtained()
         return
-    EmailService.send_ipv6(ipv6_address=ipv6_address)  # Send an email
+    EmailService().send_ipv6(ipv6_address=ipv6_address)  # Send an email
     return
