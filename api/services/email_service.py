@@ -4,7 +4,6 @@ from utils.email_util import SMTPServer
 
 
 class EmailService(object):
-    """Email service"""
 
     def __init__(self):
         self.__client = SMTPServer(

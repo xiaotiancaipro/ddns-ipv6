@@ -2,7 +2,7 @@ from celery import shared_task
 
 from config import Config
 from log import logger
-from model.network import Network
+from model.ip_addr import IPAddr
 from services.ddns_service import AliyunDDNS
 from services.email_service import EmailService
 from services.ip_service import IPService
@@ -35,7 +35,7 @@ def update_ipv6():
         )
         if not flag:
             return
-    Network.insert(ipv6_address=ipv6_address)
+    IPAddr.insert(ipv6_address=ipv6_address)
 
     return
 

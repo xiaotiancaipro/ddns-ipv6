@@ -1,5 +1,5 @@
 from log import logger
-from model.network import Network
+from model.ip_addr import IPAddr
 from utils.ip_util import IPUtil
 
 
@@ -18,7 +18,7 @@ class IPService(object):
     @classmethod
     def get_ipv6_db(cls) -> str | None:
         """Get ipv6 address from database"""
-        ipv6_address_db = Network.get_ip_addr_latest()
+        ipv6_address_db = IPAddr.get_latest()
         if ipv6_address_db in [None, "DIE"]:
             return ipv6_address_db
         logger.info(f"Successfully obtained the ipv6 address in database, and the address is {ipv6_address_db}")
