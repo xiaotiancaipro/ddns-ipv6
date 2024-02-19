@@ -1,10 +1,10 @@
 {
     "name": "ddns-ipv6-beat",
-    "cwd": "/opt/ddns-ipv6",
+    "cwd": "/opt/ddns-ipv6/api",
     "script": "/usr/local/anaconda3/envs/ddns-ipv6/bin/python",
     "args": "-m celery -A app.celery beat -l INFO",
     "interpreter": "",
-    "out_file": "/opt/ddns-ipv6/logs/ddns-ipv6-beat.log",
-    "error_file": "/opt/ddns-ipv6/logs/ddns-ipv6-beat.log",
+    "out_file": "/opt/ddns-ipv6/api/logs/ddns-ipv6-beat.log",
+    "error_file": "/opt/ddns-ipv6/api/logs/ddns-ipv6-beat.log",
     "autorestart": true
 }
