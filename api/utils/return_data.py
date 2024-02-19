@@ -1,7 +1,7 @@
 from flask import jsonify
 
 
-class JsonData:
+class JsonData(object):
 
     def __init__(self, code: int, data: dict | None, message: str):
         self.code = code

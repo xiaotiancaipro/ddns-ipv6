@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import reqparse
 
 from services.ddns_service import AliyunDDNS
-from utils.return_data_util import JsonData
+from utils.return_data import JsonData
 
 ddns_pb = Blueprint("ddns", __name__)
 

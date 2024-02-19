@@ -1,6 +1,6 @@
 from config import Config
 from log import logger
-from utils.email_util import SMTPServer
+from utils.email_server import SMTPServer
 
 
 class EmailService(object):
