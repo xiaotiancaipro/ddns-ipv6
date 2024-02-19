@@ -5,7 +5,7 @@ import psutil
 from log import logger
 
 
-class NetworkUtil(object):
+class IPUtil(object):
 
     @classmethod
     def get_ipv6_address_list(cls) -> list:
