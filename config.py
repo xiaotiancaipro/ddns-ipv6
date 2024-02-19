@@ -41,21 +41,19 @@ class Config(object):
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_ENGINE_OPTIONS = {"pool_size": 30, "pool_recycle": 3600}
 
-    # Hostname
-    HOSTNAME = get_env("HOSTNAME")
-
     # Email Server
     SMTP_HOST = get_env("SMTP_HOST")
     SMTP_PORT = get_env("SMTP_PORT")
     SMTP_USER = get_env("SMTP_USER")
     SMTP_PASSWORD = get_env("SMTP_PASSWORD")
     EMAIL_SENDER = get_env("EMAIL_SENDER")
-    EMAIL_RECEIVERS = get_env("EMAIL_RECEIVERS")
+    EMAIL_RECEIVER = get_env("EMAIL_RECEIVER")
 
-    # Domain Name
-    DOMAIN_NAME = get_env("DOMAIN_NAME")
+    # Hostname
+    HOSTNAME = get_env("HOSTNAME")
 
     # DDNS
+    DOMAIN_NAME = get_env("DOMAIN_NAME")
     RR = get_env("RR")
     TTL = int(get_env("TTL"))
 

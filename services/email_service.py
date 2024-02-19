@@ -18,9 +18,9 @@ class EmailService(object):
         """Send an email when the database is null"""
         flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
-            receivers=[Config.EMAIL_RECEIVERS],
+            receivers=[Config.EMAIL_RECEIVER],
             From=Config.EMAIL_SENDER,
-            To=Config.EMAIL_RECEIVERS,
+            To=Config.EMAIL_RECEIVER,
             Subject="IPv6 Address Acquisition",
             Message=f"The current IPv6 address of {Config.HOSTNAME} is {ipv6_address}."
         )
@@ -33,9 +33,9 @@ class EmailService(object):
     def send_ipv6_not_obtained(self) -> bool:
         flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
-            receivers=[Config.EMAIL_RECEIVERS],
+            receivers=[Config.EMAIL_RECEIVER],
             From=Config.EMAIL_SENDER,
-            To=Config.EMAIL_RECEIVERS,
+            To=Config.EMAIL_RECEIVER,
             Subject="The current IPv6 address was not obtained",
             Message=f"The current IPv6 address of {Config.HOSTNAME} was not obtained"
         )
@@ -48,9 +48,9 @@ class EmailService(object):
     def send_ipv6_db_not_obtained(self) -> bool:
         flag = self.__client.send(
             sender=Config.EMAIL_SENDER,
-            receivers=[Config.EMAIL_RECEIVERS],
+            receivers=[Config.EMAIL_RECEIVER],
             From=Config.EMAIL_SENDER,
-            To=Config.EMAIL_RECEIVERS,
+            To=Config.EMAIL_RECEIVER,
             Subject="The IPv6 address from database was not obtained",
             Message=f"The IPv6 address of {Config.HOSTNAME} from database was not obtained"
         )

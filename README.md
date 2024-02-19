@@ -74,33 +74,29 @@ conda activate ipv6-address-acquisition
    DB_PORT=6002
    DB_DATABASE=ipv6_address_acquisition
    
-   # Hostname
-   HOSTNAME=My_MacBook_Pro
-   
-   # SMTP Server
+   # SMTP
    SMTP_HOST=
    SMTP_PORT=
    SMTP_USER=
    SMTP_PASSWORD=
    
-   # Email sender
+   # Hostname
+   HOSTNAME=
+   
+   # Email sender and receiver
    EMAIL_SENDER=
+   EMAIL_RECEIVER=
    
-   # Email recipient
-   EMAIL_RECEIVERS=
-   
-   # Domain Name
-   DOMAIN_NAME=
-
    # DDNS
+   DOMAIN_NAME=
    RR=
-   TTL=600
-
+   TTL=
+   
    # Aliyun
    ALIYUN_ACCESSKEY_ID=
    ALIYUN_ACCESSKEY_SECRET=
    ```
-
+   
 2. Install the required dependencies:
 
    ```bash
