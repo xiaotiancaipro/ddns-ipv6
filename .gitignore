@@ -64,7 +64,7 @@ build/
 api/.env
 
 ### Docker ###
-/docker/volumes/*
+/docker/volumes
 
 ### Other ###
 __pycache__
