@@ -16,3 +16,7 @@ class SMTPServerConnectError(BaseError):
 
 class SMTPServerLoginError(BaseError):
     message = "SMTPServerLoginError: Failed to login"
+
+
+class AliyunDDNSCheckKeyError(BaseError):
+    message = "AliyunDDNSCheckKeyError: Alibaba Cloud key error"

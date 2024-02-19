@@ -92,11 +92,14 @@ conda activate ddns-ipv6
    RR=
    TTL=
    
+   # Provider
+   PROVIDER=aliyun
+   
    # Aliyun
    ALIYUN_ACCESSKEY_ID=
    ALIYUN_ACCESSKEY_SECRET=
    ```
-   
+
 2. Install the required dependencies:
 
    ```bash

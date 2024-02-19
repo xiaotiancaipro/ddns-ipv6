@@ -57,6 +57,9 @@ class Config(object):
     RR = get_env("RR")
     TTL = int(get_env("TTL"))
 
+    # Provider
+    PROVIDER = get_env("PROVIDER")
+
     # Aliyun
     ALIYUN_ACCESSKEY_ID = get_env("ALIYUN_ACCESSKEY_ID")
     ALIYUN_ACCESSKEY_SECRET = get_env("ALIYUN_ACCESSKEY_SECRET")

@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restful import reqparse
 
-from services.ddns_service import AliyunDDNS
+from services.ddns_service import DDNSService
 from utils.return_data import JsonData
 
 ddns_pb = Blueprint("ddns", __name__)
@@ -16,8 +16,8 @@ def aliyun():
     parser.add_argument("type", type=str, required=True, location="json")
     parser.add_argument("ttl", type=int, required=True, location="json")
     args = parser.parse_args()
-    aliyun_ddns = AliyunDDNS()
-    flag = aliyun_ddns.upgrade_records(
+    provider = DDNSService.get_supplier()
+    flag = provider.upgrade_records(
         domain_name=args["domain_name"],
         rr=args["rr"],
         value=args["value"],

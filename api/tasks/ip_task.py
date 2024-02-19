@@ -2,7 +2,7 @@ from celery import shared_task
 
 from config import Config
 from log import logger
-from services.ddns_service import AliyunDDNS
+from services.ddns_service import DDNSService
 from services.email_service import EmailService
 from services.ip_service import IPService
 
@@ -28,7 +28,8 @@ def update_ipv6():
 
     # Perform domain name resolution
     if Config.DOMAIN_NAME and Config.RR and Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET:
-        flag = AliyunDDNS().upgrade_records(
+        provider = DDNSService.get_supplier()
+        flag = provider.upgrade_records(
             domain_name=Config.DOMAIN_NAME,
             rr=Config.RR,
             value=ipv6_address,
