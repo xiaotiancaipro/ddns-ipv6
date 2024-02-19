@@ -28,7 +28,7 @@ def update_ipv6():
 
     # Perform domain name resolution
     if Config.DOMAIN_NAME and Config.RR and Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET:
-        provider = DDNSService.get_supplier()
+        provider = DDNSService.get_provider()
         flag = provider.upgrade_records(
             domain_name=Config.DOMAIN_NAME,
             rr=Config.RR,

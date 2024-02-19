@@ -1,19 +1,19 @@
 from config import Config
+from errors import ProviderCheckError
 from log import logger
 from services.ddns_suppliers import DDNS
 from services.ddns_suppliers.aliyun import AliyunDDNS
 
 PROVIDERS = {
-    "aliyun": AliyunDDNS()
+    "Aliyun": AliyunDDNS()
 }
 
 
 class DDNSService(object):
 
     @staticmethod
-    def get_supplier() -> DDNS | None:
-        provider = Config.PROVIDER
-        if provider not in PROVIDERS.keys():
-            logger.error()
-            return None
-        return PROVIDERS[provider]
+    def get_provider() -> DDNS | None:
+        if Config.PROVIDER not in PROVIDERS.keys():
+            logger.error("Provider configuration error")
+            raise ProviderCheckError
+        return PROVIDERS[Config.PROVIDER]

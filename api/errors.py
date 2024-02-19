@@ -18,5 +18,9 @@ class SMTPServerLoginError(BaseError):
     message = "SMTPServerLoginError: Failed to login"
 
 
+class ProviderCheckError(BaseError):
+    message = "ProviderCheckError: Provider configuration error"
+
+
 class AliyunDDNSCheckKeyError(BaseError):
     message = "AliyunDDNSCheckKeyError: Alibaba Cloud key error"

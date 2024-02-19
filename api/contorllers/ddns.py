@@ -16,7 +16,7 @@ def aliyun():
     parser.add_argument("type", type=str, required=True, location="json")
     parser.add_argument("ttl", type=int, required=True, location="json")
     args = parser.parse_args()
-    provider = DDNSService.get_supplier()
+    provider = DDNSService.get_provider()
     flag = provider.upgrade_records(
         domain_name=args["domain_name"],
         rr=args["rr"],
