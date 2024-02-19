@@ -1,0 +1,10 @@
+{
+    "name": "ddns-ipv6-worker",
+    "cwd": "/opt/ddns-ipv6",
+    "script": "/usr/local/anaconda3/envs/ddns-ipv6/bin/python",
+    "args": "-m celery -A app.celery worker -c 1 --loglevel INFO",
+    "interpreter": "",
+    "out_file": "/opt/ddns-ipv6/logs/ddns-ipv6-worker.log",
+    "error_file": "/opt/ddns-ipv6/logs/ddns-ipv6-worker.log",
+    "autorestart": true
+}

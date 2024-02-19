@@ -8,18 +8,18 @@ from extensions import ext_migrate, ext_database, ext_celery
 from extensions.ext_database import db
 
 
-class IPv6AddrApp(Flask):
+class DDNSIPv6(Flask):
     pass
 
 
 def create_app() -> Flask:
-    ipv6_addr_app = IPv6AddrApp(__name__)
-    ipv6_addr_app.config.from_object(Config)
-    ext_migrate.init(ipv6_addr_app, db)
-    ext_database.init_app(ipv6_addr_app)
-    ext_celery.init_app(ipv6_addr_app)
-    ipv6_addr_app.register_blueprint(ddns_pb, url_prefix="/v1/ddns")
-    return ipv6_addr_app
+    ddns_ipv6_app = DDNSIPv6(__name__)
+    ddns_ipv6_app.config.from_object(Config)
+    ext_migrate.init(ddns_ipv6_app, db)
+    ext_database.init_app(ddns_ipv6_app)
+    ext_celery.init_app(ddns_ipv6_app)
+    ddns_ipv6_app.register_blueprint(ddns_pb, url_prefix="/v1/ddns")
+    return ddns_ipv6_app
 
 
 app = create_app()

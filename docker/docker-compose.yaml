@@ -3,7 +3,7 @@ services:
   redis:
     image: redis:6
     restart: always
-    container_name: ipv6-address-acquisition-redis
+    container_name: ddns-ipv6-redis
     volumes:
       - ./volumes/redis/data:/data
     command: redis-server --requirepass server123456
@@ -12,10 +12,10 @@ services:
   db:
     image: postgres:16
     restart: always
-    container_name: ipv6-address-acquisition-postgresql
+    container_name: ddns-ipv6-postgresql
     environment:
       POSTGRES_PASSWORD: server123456
-      POSTGRES_DB: ipv6_address_acquisition
+      POSTGRES_DB: ddns_ipv6
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./volumes/db/data:/var/lib/postgresql/data
