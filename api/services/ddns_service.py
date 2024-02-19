@@ -1,8 +1,8 @@
 from config import Config
 from errors import ProviderCheckError
 from log import logger
-from services.ddns_suppliers import DDNS
-from services.ddns_suppliers.aliyun import AliyunDDNS
+from services.ddns_providers import DDNS
+from services.ddns_providers.aliyun import AliyunDDNS
 
 PROVIDERS = {
     "Aliyun": AliyunDDNS()
