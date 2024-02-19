@@ -17,7 +17,7 @@ class IPAddr(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, server_default=db.text("CURRENT_TIMESTAMP(0)"))
 
     @classmethod
-    def insert(cls, ipv6_address: str) -> bool:
+    def insert(cls, ipv6_address: str) -> int | None:
         """Inserts a new IPv6 address into the database"""
         new_ip_addr = cls(
             addr=ipv6_address,
@@ -30,15 +30,24 @@ class IPAddr(db.Model):
         except SQLAlchemyError as e:
             logger.error(f"The ipv6 address {ipv6_address} insert into ip_addr table failed, and the exception is {e}")
             db.session.rollback()
-            return False
-        return True
+            return None
+        return new_ip_addr.id
 
     @classmethod
     def get_latest(cls) -> str | None:
         """Retrieves the latest IPv6 address from the database"""
         try:
-            network = db.session.query(cls).order_by(desc(cls.created_at)).first()
+            ip_addr = db.session.query(cls).order_by(desc(cls.created_at)).first()
         except SQLAlchemyError as e:
             logger.error(f"Get ipv6 address latest is failed, and the exception is {e}")
             return None
-        return network.addr if network else "DIE"  # "DIE" -> Database is empty
+        return ip_addr.addr if ip_addr else "DIE"  # "DIE" -> Database is empty
+
+    @classmethod
+    def get_by_addr(cls, ipv6_address: str) -> db.Model | None:
+        try:
+            ip_addr = db.session.query(cls).filter(cls.addr == ipv6_address).order_by(desc(cls.created_at)).first()
+        except SQLAlchemyError as e:
+            logger.error(f"Get failed, and the exception is {e}")
+            return None
+        return ip_addr

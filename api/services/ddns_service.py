@@ -29,21 +29,21 @@ class DDNS(ABC):
         pass
 
     @abstractmethod
-    def add_records(self, rr: str, value: str, type: str, ttl: int) -> bool:
+    def add_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
         pass
 
     @abstractmethod
     def update_records(self, record_id: str, rr: str, value: str, type: str, ttl: int) -> bool:
         pass
 
-    def upgrade_records(self, rr: str, value: str, type: str, ttl: int) -> bool:
+    def upgrade_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
 
         records_list = self.describe_records()
         if records_list is None:
             logger.error("Get all DNS records error")
             return False
         if len(records_list) <= 0:
-            return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
+            return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
 
         upgrade_id = None
         records_list_to_tuple = self.__to_tuple(describe_records=records_list)
@@ -61,7 +61,7 @@ class DDNS(ABC):
                 upgrade_id = RecordId
                 break
         if upgrade_id is None:
-            return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
+            return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
         return self.update_records(record_id=upgrade_id, rr=rr, value=value, type=type, ttl=ttl)
 
     def __to_tuple(self, describe_records: list):
@@ -74,6 +74,7 @@ class DDNS(ABC):
 class AliyunDDNS(DDNS):
 
     def __init__(self):
+        self.__name = "Aliyun"
         self.__client = Alidns20150109Client(open_api_models.Config(
             access_key_id=Config.ALIYUN_ACCESSKEY_ID,
             access_key_secret=Config.ALIYUN_ACCESSKEY_SECRET
@@ -105,9 +106,9 @@ class AliyunDDNS(DDNS):
             "Status": record["Status"] == "ENABLE"
         } for record in response_dict["body"]["DomainRecords"]["Record"]]
 
-    def add_records(self, rr: str, value: str, type: str, ttl: int) -> bool:
+    def add_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
         add_domain_record_request = alidns_20150109_models.AddDomainRecordRequest(
-            domain_name=Config.DOMAIN_NAME,
+            domain_name=domain_name,
             rr=rr,
             value=value,
             type=type,
