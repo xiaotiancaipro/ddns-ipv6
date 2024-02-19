@@ -40,7 +40,7 @@ class DDNS(ABC):
 
         records_list = self.describe_records()
         if records_list is None:
-            logger.error("Get all records error")
+            logger.error("Get all DNS records error")
             return False
         if len(records_list) <= 0:
             return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
@@ -55,7 +55,7 @@ class DDNS(ABC):
                     (Type == type) and
                     (TTL == ttl)
             ):
-                logger.info("The domain name resolution already exists")
+                logger.info("The DNS record already exists")
                 return True
             if (DomainName == Config.DOMAIN_NAME) and (RR == rr):
                 upgrade_id = RecordId
