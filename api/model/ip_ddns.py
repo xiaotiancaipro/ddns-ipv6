@@ -8,9 +8,9 @@ from log import logger
 
 class IPDDNS(db.Model):
     __tablename__ = "ip_ddns"
-    __table_args__ = (db.PrimaryKeyConstraint("id", name="ip_ddns_pkey"))
+    __table_args__ = (db.PrimaryKeyConstraint("id", name="ip_ddns_pkey"),)
 
-    id = db.Column(db.BigInteger)
+    id = db.Column(db.BigInteger, autoincrement=True)
     ip_addr_id = db.Column(db.BigInteger)
     domain_name = db.Column(db.String(255), nullable=False)
     rr = db.Column(db.String(255), nullable=False)

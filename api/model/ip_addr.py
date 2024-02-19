@@ -9,9 +9,9 @@ from log import logger
 
 class IPAddr(db.Model):
     __tablename__ = "ip_addr"
-    __table_args__ = (db.PrimaryKeyConstraint("id", name="ip_addr_pkey"))
+    __table_args__ = (db.PrimaryKeyConstraint("id", name="ip_addr_pkey"),)
 
-    id = db.Column(db.BigInteger)
+    id = db.Column(db.BigInteger, autoincrement=True)
     addr = db.Column(db.String(39), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.text("CURRENT_TIMESTAMP(0)"))
     updated_at = db.Column(db.DateTime, nullable=False, server_default=db.text("CURRENT_TIMESTAMP(0)"))
