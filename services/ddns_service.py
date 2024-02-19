@@ -37,23 +37,38 @@ class DDNS(ABC):
         pass
 
     def upgrade_records(self, rr: str, value: str, type: str, ttl: int) -> bool:
+
         records_list = self.describe_records()
         if records_list is None:
             logger.error("Get all records error")
             return False
         if len(records_list) <= 0:
             return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
-        records_rr_list = [record["RR"] for record in records_list if record["RecordId"] and record["RR"]]
-        if rr not in records_rr_list:
-            return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
+
         upgrade_id = None
-        for record in records_list:
-            if record["RR"] == rr:
-                upgrade_id = record["RecordId"]
+        records_list_to_tuple = self.__to_tuple(describe_records=records_list)
+        for RecordId, DomainName, RR, TTL, Type, Value, Status in records_list_to_tuple:
+            if (
+                    (DomainName == Config.DOMAIN_NAME) and
+                    (RR == rr) and
+                    (Value == value) and
+                    (Type == type) and
+                    (TTL == ttl)
+            ):
+                logger.info("The domain name resolution already exists")
+                return True
+            if (DomainName == Config.DOMAIN_NAME) and (RR == rr):
+                upgrade_id = RecordId
                 break
         if upgrade_id is None:
             return self.add_records(rr=rr, value=value, type=type, ttl=ttl)
         return self.update_records(record_id=upgrade_id, rr=rr, value=value, type=type, ttl=ttl)
+
+    def __to_tuple(self, describe_records: list):
+        return [
+            (item["RecordId"], item["DomainName"], item["RR"], item["TTL"], item["Type"], item["Value"], item["Status"])
+            for item in describe_records
+        ]
 
 
 class AliyunDDNS(DDNS):
