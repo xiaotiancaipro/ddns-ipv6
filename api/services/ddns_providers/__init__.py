@@ -1,13 +1,12 @@
 from abc import ABC, abstractmethod
 
-from config import Config
 from log import logger
 
 
 class DDNS(ABC):
 
     @abstractmethod
-    def describe_records(self) -> list | None:
+    def describe_records(self, domain_name: str) -> list | None:
         """
         [
             {
@@ -33,7 +32,7 @@ class DDNS(ABC):
 
     def upgrade_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
 
-        records_list = self.describe_records()
+        records_list = self.describe_records(domain_name=domain_name)
         if records_list is None:
             logger.error("Get all DNS records error")
             return False
@@ -41,10 +40,9 @@ class DDNS(ABC):
             return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
 
         upgrade_id = None
-        records_list_to_tuple = self.__to_tuple(describe_records=records_list)
-        for RecordId, DomainName, RR, TTL, Type, Value, Status in records_list_to_tuple:
+        for RecordId, DomainName, RR, TTL, Type, Value, Status in self.__to_tuple(describe_records=records_list):
             if (
-                    (DomainName == Config.DOMAIN_NAME) and
+                    (DomainName == domain_name) and
                     (RR == rr) and
                     (Value == value) and
                     (Type == type) and
@@ -52,7 +50,7 @@ class DDNS(ABC):
             ):
                 logger.info("The DNS record already exists")
                 return True
-            if (DomainName == Config.DOMAIN_NAME) and (RR == rr):
+            if (DomainName == domain_name) and (RR == rr):
                 upgrade_id = RecordId
                 break
         if upgrade_id is None:

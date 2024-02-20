@@ -10,24 +10,36 @@ from model.record import RecordDDNS
 from . import DDNS
 
 
-class AliyunDDNS(DDNS):
+class AliyunDDNSConfig(object):
 
     def __init__(self):
-        self.__check_key()
-        self.__client = Alidns20150109Client(open_api_models.Config(
-            access_key_id=Config.ALIYUN_ACCESSKEY_ID,
-            access_key_secret=Config.ALIYUN_ACCESSKEY_SECRET
-        ))
+        self.__access_key_id = Config.ALIYUN_ACCESSKEY_ID
+        self.__access_key_secret = Config.ALIYUN_ACCESSKEY_SECRET
+        self.__init_check()
 
-    def __check_key(self) -> None:
-        if not (Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET):
+    def __init_check(self):
+        if not (self.__access_key_id and self.__access_key_secret):
             logger.error("Alibaba Cloud key error")
             raise AliyunDDNSCheckKeyError
 
-    def describe_records(self) -> list | None:
-        describe_domain_records_request = alidns_20150109_models.DescribeDomainRecordsRequest(
-            domain_name=Config.DOMAIN_NAME
-        )
+    def access_key_id(self) -> str:
+        return self.__access_key_id
+
+    def access_key_secret(self) -> str:
+        return self.__access_key_secret
+
+
+class AliyunDDNS(DDNS):
+
+    def __init__(self):
+        self.__aliyun_ddns_config = AliyunDDNSConfig()
+        self.__client = Alidns20150109Client(open_api_models.Config(
+            access_key_id=self.__aliyun_ddns_config.access_key_id(),
+            access_key_secret=self.__aliyun_ddns_config.access_key_secret()
+        ))
+
+    def describe_records(self, domain_name: str) -> list | None:
+        describe_domain_records_request = alidns_20150109_models.DescribeDomainRecordsRequest(domain_name=domain_name)
         runtime = util_models.RuntimeOptions()
         try:
             response = self.__client.describe_domain_records_with_options(describe_domain_records_request, runtime)

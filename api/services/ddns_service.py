@@ -13,7 +13,9 @@ class DDNSService(object):
 
     @staticmethod
     def get_provider() -> DDNS | None:
+        if not Config.PROVIDER:
+            return None
         if Config.PROVIDER not in PROVIDERS.keys():
-            logger.error("Provider configuration error")
+            logger.error("Provider name not in 'Aliyun'")
             raise ProviderCheckError
         return PROVIDERS[Config.PROVIDER]
