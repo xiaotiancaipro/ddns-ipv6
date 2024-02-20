@@ -6,6 +6,7 @@ from alibabacloud_tea_util import models as util_models
 from config import Config
 from errors import AliyunDDNSCheckKeyError
 from log import logger
+from model.record import RecordDDNS
 from . import DDNS
 
 
@@ -67,10 +68,11 @@ class AliyunDDNS(DDNS):
         if response_dict["statusCode"] != 200:
             logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
+        RecordDDNS.insert(provider="Aliyun", domain_name=domain_name, rr=rr, type=type, value=value, ttl=ttl)
         logger.info("Domain name resolution added successfully")
         return True
 
-    def update_records(self, record_id: str, rr: str, value: str, type: str, ttl: int) -> bool:
+    def update_records(self, record_id: str, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
         update_domain_record_request = alidns_20150109_models.UpdateDomainRecordRequest(
             record_id=record_id,
             rr=rr,
@@ -88,5 +90,6 @@ class AliyunDDNS(DDNS):
         if response_dict["statusCode"] != 200:
             logger.error("Unexpected status code {}".format(response_dict["statusCode"]))
             return False
+        RecordDDNS.insert(provider="Aliyun", domain_name=domain_name, rr=rr, type=type, value=value, ttl=ttl)
         logger.info("Domain name resolution updated successfully")
         return True

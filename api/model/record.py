@@ -11,6 +11,7 @@ class RecordDDNS(db.Model):
     __table_args__ = (db.PrimaryKeyConstraint("id", name="record_ddns_pkey"),)
 
     id = db.Column(db.BigInteger, autoincrement=True)
+    provider = db.Column(db.String(20), nullable=False)
     domain_name = db.Column(db.String(255), nullable=False)
     rr = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(10), nullable=False)
@@ -20,8 +21,9 @@ class RecordDDNS(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, server_default=db.text("CURRENT_TIMESTAMP(0)"))
 
     @classmethod
-    def insert(cls, domain_name: str, rr: str, type: str, value: str, ttl: int) -> int | None:
+    def insert(cls, provider: str, domain_name: str, rr: str, type: str, value: str, ttl: int) -> int | None:
         new_record_ddns = cls(
+            provider=provider,
             domain_name=domain_name,
             rr=rr,
             type=type,

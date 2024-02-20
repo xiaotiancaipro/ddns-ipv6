@@ -28,7 +28,7 @@ class DDNS(ABC):
         pass
 
     @abstractmethod
-    def update_records(self, record_id: str, rr: str, value: str, type: str, ttl: int) -> bool:
+    def update_records(self, record_id: str, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
         pass
 
     def upgrade_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
@@ -57,7 +57,14 @@ class DDNS(ABC):
                 break
         if upgrade_id is None:
             return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
-        return self.update_records(record_id=upgrade_id, rr=rr, value=value, type=type, ttl=ttl)
+        return self.update_records(
+            record_id=upgrade_id,
+            domain_name=domain_name,
+            rr=rr,
+            value=value,
+            type=type,
+            ttl=ttl
+        )
 
     def __to_tuple(self, describe_records: list):
         return [
