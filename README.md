@@ -4,7 +4,7 @@
 
 ## Description
 
-Obtain the host IPv6 address and send it to the designated recipient through email.
+Obtain the host IPv6 address, send emails through the mail server, and perform DDNS at the same time. Currently, Alibaba Cloud is supported.
 
 
 
