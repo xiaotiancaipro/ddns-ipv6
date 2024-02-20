@@ -35,27 +35,28 @@ docker compose -f docker-compose.yaml -p ddns-ipv6 up -d
 
 
 
-#### Installation of the basic environment:
+#### Installation of the basic environment
 
-Server startup requires Python 3.10.x. It is recommended to use [Anaconda](https://docs.anaconda.com/free/anaconda/install/) for quick installation of the Python environment, which already includes the pip package management tool.
-
-To create a Python 3.10 environment named "ipv6-address-acquisition",  you can use the following command:
+Server startup requires Python 3.10.x. It is recommended to use [Anaconda](https://docs.anaconda.com/free/anaconda/install/) for quick installation of the Python environment, which already includes the pip package management tool
 
 ```bash
+# Create a Python 3.10 environment named "ddns-ipv6"
 conda create --name ddns-ipv6 python=3.10
-```
-
-To switch to the "ipv6-address-acquisition" Python environment, use the following command:
-
-```bash
+# Switch to the "ddns-ipv6" Python environment
 conda activate ddns-ipv6
 ```
 
 
 
-#### Follow these steps:
+#### Follow these steps
 
-1. Configure the environment variables. Create a file named `.env` in the current directory and copy the contents from `.env.example`. Modify the values of these environment variables according to your requirements:
+1. Navigate to the "api" directory
+
+   ```bash
+   cd api
+   ```
+
+2. Configure the environment variables. Create a file named `.env` in the current directory and copy the contents from `.env.example`. Modify the values of these environment variables according to your requirements
 
    ```bash
    APP_ENV=PRODUCTION
@@ -100,25 +101,25 @@ conda activate ddns-ipv6
    ALIYUN_ACCESSKEY_SECRET=
    ```
 
-2. Install the required dependencies:
+3. Install the required dependencies
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Perform the database migration. Perform database migration to the latest version:
+4. Perform the database migration. Perform database migration to the latest version
 
    ```bash
    flask db upgrade
    ```
 
-4. Start the Worker service:
+5. Start the Worker service
 
    ```bash
    python -m celery -A app.celery worker -c 1 --loglevel INFO
    ```
 
-5. Start the Beat service:
+6. Start the Beat service
 
    ```bash
    python -m celery -A app.celery beat -l INFO
@@ -128,7 +129,5 @@ After successful startup.
 
 
 
-
-
-**If this project is of some use to you, thank you for your star**
+**If this project is of some use to you, thank you for your star !**
 
