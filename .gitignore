@@ -60,12 +60,14 @@ build/
 ### MacOS ###
 .DS_Store
 
-### API ###
-api/.env
-
 ### Docker ###
 /docker/volumes
 
-### Other ###
+### Python ###
 __pycache__
-celerybeat-schedule.db
+
+### Celery ###
+celerybeat-schedule.*
+
+### API ###
+api/.env
