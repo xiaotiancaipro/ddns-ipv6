@@ -22,11 +22,6 @@ def update_ipv6():
         logger.info(f"The ipv6 address is not changed")
         return
 
-    # Send an email
-    flag = EmailService().send_ipv6(ipv6_address=ipv6_address)
-    if not flag:
-        return
-
     # Perform domain name resolution
     if Config.DOMAIN_NAME and Config.RR and Config.ALIYUN_ACCESSKEY_ID and Config.ALIYUN_ACCESSKEY_SECRET:
         provider = DDNSService.get_provider()
@@ -39,6 +34,11 @@ def update_ipv6():
         )
         if not flag:
             return
+
+    # Send an email
+    flag = EmailService().send_ipv6(ipv6_address=ipv6_address)
+    if not flag:
+        return
 
     # Update database
     IPAddr.insert(ipv6_address=ipv6_address)
