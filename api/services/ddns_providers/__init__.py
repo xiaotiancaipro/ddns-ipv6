@@ -1,25 +1,23 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 from log import logger
+
+
+class DDNSRecord(object):
+    RecordId: str
+    DomainName: str
+    RR: str
+    TTL: int
+    Type: str
+    Value: str
+    Status: bool
 
 
 class DDNS(ABC):
 
     @abstractmethod
-    def describe_records(self, domain_name: str) -> list | None:
-        """
-        [
-            {
-                "RecordId": str,
-                "DomainName": str,
-                "RR": str,
-                "TTL": int,
-                "Type": str,
-                "Value": str,
-                "Status": bool
-            },
-        ]
-        """
+    def describe_records(self, domain_name: str) -> List[DDNSRecord] | None:
         pass
 
     @abstractmethod
@@ -40,18 +38,18 @@ class DDNS(ABC):
             return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
 
         upgrade_id = None
-        for RecordId, DomainName, RR, TTL, Type, Value, Status in self.__to_tuple(describe_records=records_list):
+        for record in records_list:
             if (
-                    (DomainName == domain_name) and
-                    (RR == rr) and
-                    (Value == value) and
-                    (Type == type) and
-                    (TTL == ttl)
+                    (record.DomainName == domain_name) and
+                    (record.RR == rr) and
+                    (record.Value == value) and
+                    (record.Type == type) and
+                    (record.TTL == ttl)
             ):
                 logger.info("The DNS record already exists")
                 return True
-            if (DomainName == domain_name) and (RR == rr):
-                upgrade_id = RecordId
+            if (record.DomainName == domain_name) and (record.RR == rr):
+                upgrade_id = record.RecordId
                 break
         if upgrade_id is None:
             return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
@@ -63,9 +61,3 @@ class DDNS(ABC):
             type=type,
             ttl=ttl
         )
-
-    def __to_tuple(self, describe_records: list):
-        return [
-            (item["RecordId"], item["DomainName"], item["RR"], item["TTL"], item["Type"], item["Value"], item["Status"])
-            for item in describe_records
-        ]

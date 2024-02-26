@@ -1,3 +1,5 @@
+from typing import List
+
 from alibabacloud_alidns20150109 import models as alidns_20150109_models
 from alibabacloud_alidns20150109.client import Client as Alidns20150109Client
 from alibabacloud_tea_openapi import models as open_api_models
@@ -7,7 +9,7 @@ from config import Config
 from errors import AliyunDDNSCheckKeyError
 from log import logger
 from model.record import RecordDDNS
-from . import DDNS
+from . import DDNS, DDNSRecord
 
 
 class AliyunDDNSConfig(object):
@@ -38,7 +40,7 @@ class AliyunDDNS(DDNS):
             access_key_secret=self.__aliyun_ddns_config.access_key_secret()
         ))
 
-    def describe_records(self, domain_name: str) -> list | None:
+    def describe_records(self, domain_name: str) -> List[DDNSRecord] | None:
         describe_domain_records_request = alidns_20150109_models.DescribeDomainRecordsRequest(domain_name=domain_name)
         runtime = util_models.RuntimeOptions()
         try:
@@ -52,15 +54,18 @@ class AliyunDDNS(DDNS):
             return None
         if response_dict["body"]["TotalCount"] <= 0:
             return list()
-        return [{
-            "RecordId": record["RecordId"],
-            "DomainName": record["DomainName"],
-            "RR": record["RR"],
-            "TTL": record["TTL"],
-            "Type": record["Type"],
-            "Value": record["Value"],
-            "Status": record["Status"] == "ENABLE"
-        } for record in response_dict["body"]["DomainRecords"]["Record"]]
+        result_list = list()
+        for record in response_dict["body"]["DomainRecords"]["Record"]:
+            ddns_record = DDNSRecord()
+            ddns_record.RecordId = record["RecordId"]
+            ddns_record.DomainName = record["DomainName"]
+            ddns_record.RR = record["RR"]
+            ddns_record.TTL = record["TTL"]
+            ddns_record.Type = record["Type"]
+            ddns_record.Value = record["Value"]
+            ddns_record.Status = record["Status"] == "ENABLE"
+            result_list.append(ddns_record)
+        return result_list
 
     def add_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
         add_domain_record_request = alidns_20150109_models.AddDomainRecordRequest(
