@@ -36,7 +36,7 @@ def update_ipv6():
             return
 
     # Send an email
-    flag = EmailService().send_ipv6(ipv6_address=ipv6_address)
+    flag = EmailService.send_ipv6(ipv6_address=ipv6_address)
     if not flag:
         return
 
@@ -51,7 +51,7 @@ def schedule_ipv6():
     """Get regularly IPv6 address task"""
     ipv6_address = IPService.get_current()  # Get current
     if ipv6_address is None:
-        EmailService().send_ipv6_not_obtained()
+        EmailService.send_ipv6_not_obtained()
         return
-    EmailService().send_ipv6(ipv6_address=ipv6_address)  # Send an email
+    EmailService.send_ipv6(ipv6_address=ipv6_address)  # Send an email
     return

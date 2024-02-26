@@ -3,6 +3,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
+from config import Config
 from errors import SMTPServerConnectError, SMTPServerLoginError
 from log import logger
 from model.record import RecordEmail
@@ -10,7 +11,13 @@ from model.record import RecordEmail
 
 class SMTPServer(object):
 
-    def __init__(self, host, port, user, password):
+    def __init__(
+            self,
+            host: str = Config.SMTP_HOST,
+            port: int | str = Config.SMTP_PORT,
+            user: str = Config.SMTP_USER,
+            password: str = Config.SMTP_PASSWORD
+    ):
         self.__client = smtplib.SMTP()
         try:
             self.__client.connect(host=host, port=int(port))
