@@ -16,6 +16,6 @@ class DDNSService(object):
         if not Config.PROVIDER:
             return None
         if Config.PROVIDER not in PROVIDERS.keys():
-            logger.error("Provider name not in 'Aliyun'")
+            logger.error("Provider configuration error")
             raise ProviderCheckError
         return PROVIDERS[Config.PROVIDER]

@@ -4,20 +4,20 @@ from utils.smtp_server import SMTPServer
 
 
 class EmailService(object):
-    __smtp = SMTPServer()
+    __smtp = SMTPServer(Config.SMTP_HOST, Config.SMTP_PORT, Config.SMTP_USER, Config.SMTP_PASSWORD)
+    __smtp_config = {
+        "sender": Config.EMAIL_SENDER,
+        "receivers": [Config.EMAIL_RECEIVER],
+        "From": Config.EMAIL_SENDER,
+        "To": Config.EMAIL_RECEIVER,
+    }
 
     @classmethod
     def send_ipv6(cls, ipv6_address: str) -> bool:
         """Send an email when the database is null"""
-        flag = cls.__smtp.send(
-            sender=Config.EMAIL_SENDER,
-            receivers=[Config.EMAIL_RECEIVER],
-            From=Config.EMAIL_SENDER,
-            To=Config.EMAIL_RECEIVER,
-            Subject="IPv6 Address Acquisition",
-            Message=f"Host: {Config.HOSTNAME}\nIPv6 Address: {ipv6_address}\n"
-        )
-        if not flag:
+        cls.__smtp_config["Subject"] = "IPv6 Address Acquisition"
+        cls.__smtp_config["Message"] = f"Host: {Config.HOSTNAME}\nIPv6 Address: {ipv6_address}\n"
+        if not cls.__smtp.send(**cls.__smtp_config):
             logger.error(f"Send an email failed, and the IPv6 address now is {ipv6_address}")
             return False
         logger.info("Send an email successfully")
@@ -25,15 +25,9 @@ class EmailService(object):
 
     @classmethod
     def send_ipv6_not_obtained(cls) -> bool:
-        flag = cls.__smtp.send(
-            sender=Config.EMAIL_SENDER,
-            receivers=[Config.EMAIL_RECEIVER],
-            From=Config.EMAIL_SENDER,
-            To=Config.EMAIL_RECEIVER,
-            Subject="The current IPv6 address was not obtained",
-            Message=f"The current IPv6 address of {Config.HOSTNAME} was not obtained"
-        )
-        if not flag:
+        cls.__smtp_config["Subject"] = "The current IPv6 address was not obtained"
+        cls.__smtp_config["Message"] = f"The current IPv6 address of {Config.HOSTNAME} was not obtained"
+        if not cls.__smtp.send(**cls.__smtp_config):
             logger.error(f"Send an email failed")
             return False
         logger.info("Send an email successfully")
