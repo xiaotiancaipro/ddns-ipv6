@@ -5,7 +5,7 @@ import dotenv
 dotenv.load_dotenv()
 
 
-def get_env(key) -> str | None:
+def get_env(key: str) -> str | None:
     return os.environ.get(key, None)
 
 

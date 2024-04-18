@@ -13,13 +13,23 @@ class DDNSIPv6(Flask):
 
 
 def create_app() -> Flask:
-    ddns_ipv6_app = DDNSIPv6(__name__)
-    ddns_ipv6_app.config.from_object(Config)
-    ext_migrate.init(ddns_ipv6_app, db)
-    ext_database.init_app(ddns_ipv6_app)
-    ext_celery.init_app(ddns_ipv6_app)
-    ddns_ipv6_app.register_blueprint(ddns_pb, url_prefix="/v1/ddns")
-    return ddns_ipv6_app
+    app_ = DDNSIPv6(__name__)
+    app_.config.from_object(Config)  # configuration
+    initialize_extensions(app_)  # middleware
+    register_blueprints(app_)  # interface
+    return app_
+
+
+def initialize_extensions(app_: Flask) -> None:
+    ext_migrate.init(app_, db)  # database migrate
+    ext_database.init_app(app_)  # database
+    ext_celery.init_app(app_)  # celery
+    return None
+
+
+def register_blueprints(app_: Flask) -> None:
+    app_.register_blueprint(ddns_pb, url_prefix="/v1/ddns")
+    return None
 
 
 app = create_app()

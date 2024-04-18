@@ -16,7 +16,10 @@ class EmailService(object):
     def send_ipv6(cls, ipv6_address: str) -> bool:
         """Send an email when the database is null"""
         cls.__smtp_config["Subject"] = "IPv6 Address Acquisition"
-        cls.__smtp_config["Message"] = f"Host: {Config.HOSTNAME}\nIPv6 Address: {ipv6_address}\n"
+        cls.__smtp_config["Message"] = "\n".join([
+            f"Host: {Config.HOSTNAME}"
+            f"IPv6 Address: {ipv6_address}"
+        ])
         if not cls.__smtp.send(**cls.__smtp_config):
             logger.error(f"Send an email failed, and the IPv6 address now is {ipv6_address}")
             return False
