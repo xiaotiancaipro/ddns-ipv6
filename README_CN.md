@@ -94,7 +94,7 @@ conda activate ddns-ipv6
    TTL=
    
    # Provider
-   PROVIDER=Aliyun
+   PROVIDER=aliyun
    
    # Aliyun
    ALIYUN_ACCESSKEY_ID=
