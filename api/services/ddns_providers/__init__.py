@@ -2,6 +2,23 @@ from abc import ABC, abstractmethod
 from typing import List
 
 from log import logger
+from .aliyun import AliyunDDNS
+from .baidu import BaiduDDNS
+from .tencent import TencentDDNS
+
+
+class Providers(object):
+    """DDNS provider"""
+
+    AliYun = "aliyun"
+    BaiduYun = "baidu"
+    TencentYun = "tencent"
+
+    PROVIDERS = {
+        AliYun: AliyunDDNS(),
+        BaiduYun: BaiduDDNS(),
+        TencentYun: TencentDDNS()
+    }
 
 
 class DDNSRecord(object):
@@ -53,6 +70,7 @@ class DDNS(ABC):
                 break
         if upgrade_id is None:
             return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
+
         return self.update_records(
             record_id=upgrade_id,
             domain_name=domain_name,
