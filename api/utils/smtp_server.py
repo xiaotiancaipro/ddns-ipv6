@@ -3,7 +3,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-from errors import SMTPServerConnectError, SMTPServerLoginError
+from errors.utils import SMTPServerConnectError, SMTPServerLoginError
 from log import logger
 from model.record import RecordEmail
 

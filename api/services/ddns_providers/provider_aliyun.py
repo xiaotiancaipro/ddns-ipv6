@@ -6,39 +6,19 @@ from alibabacloud_tea_openapi import models as open_api_models
 from alibabacloud_tea_util import models as util_models
 
 from config import Config
-from errors import AliyunDDNSCheckKeyError
+from errors.services import AliyunDDNSCheckKeyError
 from log import logger
 from model.record import RecordDDNS
-from . import DDNS, DDNSRecord
-
-
-class AliyunDDNSConfig(object):
-
-    def __init__(self):
-        self.__access_key_id = Config.ALIYUN_ACCESSKEY_ID
-        self.__access_key_secret = Config.ALIYUN_ACCESSKEY_SECRET
-        self.__init_check()
-
-    def __init_check(self):
-        if not (self.__access_key_id and self.__access_key_secret):
-            logger.error("Alibaba Cloud key error")
-            raise AliyunDDNSCheckKeyError
-
-    def access_key_id(self) -> str:
-        return self.__access_key_id
-
-    def access_key_secret(self) -> str:
-        return self.__access_key_secret
+from .base import DDNSRecord, DDNS
 
 
 class AliyunDDNS(DDNS):
 
     def __init__(self):
-        self.__aliyun_ddns_config = AliyunDDNSConfig()
-        self.__client = Alidns20150109Client(open_api_models.Config(
-            access_key_id=self.__aliyun_ddns_config.access_key_id(),
-            access_key_secret=self.__aliyun_ddns_config.access_key_secret()
-        ))
+        self.__access_key_id = Config.ALIYUN_ACCESSKEY_ID
+        self.__access_key_secret = Config.ALIYUN_ACCESSKEY_SECRET
+        self.__init_check()
+        self.__client = Alidns20150109Client(open_api_models.Config(self.__access_key_id, self.__access_key_secret))
 
     def describe_records(self, domain_name: str) -> List[DDNSRecord] | None:
         describe_domain_records_request = alidns_20150109_models.DescribeDomainRecordsRequest(domain_name=domain_name)
@@ -110,3 +90,8 @@ class AliyunDDNS(DDNS):
         RecordDDNS.insert(provider="Aliyun", domain_name=domain_name, rr=rr, type=type, value=value, ttl=ttl)
         logger.info("Domain name resolution updated successfully")
         return True
+
+    def __init_check(self):
+        if not (self.__access_key_id and self.__access_key_secret):
+            logger.error("Alibaba Cloud key error")
+            raise AliyunDDNSCheckKeyError
