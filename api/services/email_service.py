@@ -5,12 +5,12 @@ from utils.string_util import StringUtil
 
 MESSAGE_1 = """\
 Host: {{host}}
-IPv6: {{ipv6_address}}
+IPv6: {{ipv6_address}}\
 """
 
 MESSAGE_2 = """\
 Host: {{host}}
-IPv6: Not Obtained
+IPv6: Not Obtained\
 """
 
 
