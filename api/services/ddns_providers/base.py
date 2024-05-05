@@ -30,12 +30,12 @@ class DDNS(ABC):
 
     def upgrade_records(self, domain_name: str, rr: str, value: str, type: str, ttl: int) -> bool:
 
-        records_list = self.describe_records(domain_name=domain_name)
+        records_list = self.describe_records(domain_name)
         if records_list is None:
             logger.error("Get all DNS records error")
             return False
         if len(records_list) <= 0:
-            return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
+            return self.add_records(domain_name, rr, value, type, ttl)
 
         upgrade_id = None
         for record in records_list:
@@ -52,13 +52,6 @@ class DDNS(ABC):
                 upgrade_id = record.RecordId
                 break
         if upgrade_id is None:
-            return self.add_records(domain_name=domain_name, rr=rr, value=value, type=type, ttl=ttl)
+            return self.add_records(domain_name, rr, value, type, ttl)
 
-        return self.update_records(
-            record_id=upgrade_id,
-            domain_name=domain_name,
-            rr=rr,
-            value=value,
-            type=type,
-            ttl=ttl
-        )
+        return self.update_records(upgrade_id, domain_name, rr, value, type, ttl)
