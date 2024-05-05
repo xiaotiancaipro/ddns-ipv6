@@ -64,16 +64,16 @@ conda activate ddns-ipv6
    SYSTEM_SECRET_KEY=
    
    # Redis
-   REDIS_PASSWORD=server123456
    REDIS_HOST=localhost
    REDIS_PORT=6001
+   REDIS_PASSWORD=server123456
    
    # PostgreSQL
-   DB_USERNAME=postgres
-   DB_PASSWORD=server123456
    DB_HOST=localhost
    DB_PORT=6002
    DB_DATABASE=ddns_ipv6
+   DB_USERNAME=postgres
+   DB_PASSWORD=server123456
    
    # SMTP
    SMTP_HOST=
@@ -82,7 +82,7 @@ conda activate ddns-ipv6
    SMTP_PASSWORD=
    
    # Hostname
-   HOSTNAME=
+   HOSTNAME=Server_Example
    
    # Email sender and receiver
    EMAIL_SENDER=
@@ -93,7 +93,7 @@ conda activate ddns-ipv6
    RR=
    TTL=
    
-   # Provider
+   # Supplier
    PROVIDER=aliyun
    
    # Aliyun
