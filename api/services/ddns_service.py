@@ -1,7 +1,7 @@
 from config import Config
+from ddns_providers import DDNS, PROVIDERS
 from errors.services import ProviderCheckError
 from log import logger
-from services.ddns_providers import DDNS, PROVIDERS
 
 
 class DDNSService(object):
