@@ -40,8 +40,9 @@ docker compose -f docker-compose.yaml -p ddns-ipv6 up -d
 Server startup requires Python 3.10.x. It is recommended to use [Anaconda](https://docs.anaconda.com/free/anaconda/install/) for quick installation of the Python environment, which already includes the pip package management tool
 
 ```bash
-# Create a Python 3.10 environment named "ddns-ipv6"
-conda create --name ddns-ipv6 python=3.10
+cd api
+# Create a Python 3.12 environment named "ddns-ipv6"
+conda env create -f environment.yaml
 # Switch to the "ddns-ipv6" Python environment
 conda activate ddns-ipv6
 ```
